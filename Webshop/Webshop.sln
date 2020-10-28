@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Presentation", "Webshop\Webshop.Presentation.csproj", "{6E9F09B1-2273-46B5-ABE5-DD8F7F3196D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Logic", "Webshop.Business\Webshop.Logic.csproj", "{B7D06CB8-DFF7-4311-B57D-1D973A87E298}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Business", "Webshop.Business\Webshop.Business.csproj", "{B7D06CB8-DFF7-4311-B57D-1D973A87E298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Data", "Webshop.Data\Webshop.Data.csproj", "{CA443CE2-EEEB-43CD-9B35-ADA003E04023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Data", "Webshop.Data\Webshop.Data.csproj", "{CA443CE2-EEEB-43CD-9B35-ADA003E04023}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.UI", "Webshop.UI\Webshop.UI.csproj", "{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLib", "ModelLib\ModelLib.csproj", "{4101130A-82FD-4756-A572-E754896EB768}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6E9F09B1-2273-46B5-ABE5-DD8F7F3196D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E9F09B1-2273-46B5-ABE5-DD8F7F3196D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E9F09B1-2273-46B5-ABE5-DD8F7F3196D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E9F09B1-2273-46B5-ABE5-DD8F7F3196D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7D06CB8-DFF7-4311-B57D-1D973A87E298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7D06CB8-DFF7-4311-B57D-1D973A87E298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7D06CB8-DFF7-4311-B57D-1D973A87E298}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +25,14 @@ Global
 		{CA443CE2-EEEB-43CD-9B35-ADA003E04023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA443CE2-EEEB-43CD-9B35-ADA003E04023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA443CE2-EEEB-43CD-9B35-ADA003E04023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4101130A-82FD-4756-A572-E754896EB768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4101130A-82FD-4756-A572-E754896EB768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4101130A-82FD-4756-A572-E754896EB768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4101130A-82FD-4756-A572-E754896EB768}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
