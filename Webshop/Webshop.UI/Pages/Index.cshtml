@@ -14,5 +14,15 @@
         <input asp-for="ProductVm.Value" />
         <input type="submit"/>
     </form>
-    
+</div>
+
+<div>
+    @{
+        foreach (var Product in Model.Products)
+        {
+            <p>
+                @Product.Name || @Product.Description || @Product.Value
+            </p>
+        }
+    }
 </div>

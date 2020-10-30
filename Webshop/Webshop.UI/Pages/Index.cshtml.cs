@@ -20,10 +20,12 @@ namespace Webshop.UI.Pages
         }
         [BindProperty]
         public ProductViewModel ProductVm { get; set; }
+        [BindProperty]
+        public IEnumerable<GetProductsViewModel> Products { get; set; }
        
         public void OnGet()
         {
-
+            Products = new GetProducts(_context).Run();
         }
         public async Task<IActionResult> OnPost()
         {
