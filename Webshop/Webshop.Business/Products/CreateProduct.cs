@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Webshop.Data;
+using Webshop.Logic.Products.ViewModels;
 using Webshop.ModelLib.Models;
 
 
@@ -15,14 +17,16 @@ namespace Webshop.Logic.Products
             _context = context;
         }
 
-        public void Run(int id, string name, string description)
+        public async Task Run(ProductViewModel productViewModel)
         {
             _context.Products.Add(new Product()
             {
-                Id = id,
-                Name = name,
-                Description = description
+                Value = productViewModel.Value,
+                Name = productViewModel.Name,
+                Description = productViewModel.Description
             });
+
+            await _context.SaveChangesAsync();
         }
     }
 }

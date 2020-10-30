@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Principal;
 using System.Text;
 
-namespace Webshop.ModelLib.Models
+namespace Webshop.Logic.Products.ViewModels
 {
-    public class Product
+    public class ProductViewModel
     {
-        public int Id { get; set; }
         public decimal Value { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
