@@ -19,9 +19,10 @@ namespace Webshop.Logic.Products
 
         public async Task Run(ProductViewModel productViewModel)
         {
+            productViewModel.Value = productViewModel.Value.Replace('.', ',');
             _context.Products.Add(new Product()
             {
-                Value = productViewModel.Value,
+                Value = Convert.ToDecimal(productViewModel.Value),
                 Name = productViewModel.Name,
                 Description = productViewModel.Description
             });
