@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Webshop.Logic.Products.ViewModels
+namespace Webshop.Logic.ViewModels
 {
     public class ProductViewModel
     {

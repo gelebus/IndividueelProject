@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Webshop.Logic.Products.ViewModels
+namespace Webshop.Logic.ViewModels
 {
-    public class GetProductsViewModel
+    public class AdminProductViewModel
     {
-        public string Value { get; set; }
+        public int Id { get; set; }
+        public decimal Value { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

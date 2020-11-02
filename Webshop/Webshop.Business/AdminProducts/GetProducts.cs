@@ -5,7 +5,7 @@ using System.Text;
 using Webshop.Data;
 using Webshop.Logic.ViewModels;
 
-namespace Webshop.Logic.Products
+namespace Webshop.Logic.AdminProducts
 {
     public class GetProducts
     {
@@ -16,12 +16,13 @@ namespace Webshop.Logic.Products
             _context = context;
         }
 
-        public IEnumerable<ProductViewModel> Run()
+        public IEnumerable<AdminProductViewModel> Run()
         {
-            IEnumerable<ProductViewModel> products = _context.Products.ToList().Select(a => new ProductViewModel
+            IEnumerable<AdminProductViewModel> products = _context.Products.ToList().Select(a => new AdminProductViewModel
             {
+                Id = a.Id,
                 Description = a.Description,
-                Value = $"€{a.Value.ToString("N2")}",
+                Value = a.Value,
                 Name = a.Name
             });
             return products;

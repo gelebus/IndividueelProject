@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Webshop.Data;
-using Webshop.Logic.Products.ViewModels;
+using Webshop.Logic.ViewModels;
 using Webshop.ModelLib.Models;
 
 
-namespace Webshop.Logic.Products
+namespace Webshop.Logic.AdminProducts
 {
     public class CreateProduct
     {
