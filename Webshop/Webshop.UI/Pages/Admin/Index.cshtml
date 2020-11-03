@@ -7,8 +7,15 @@
 
     <div>
         <p v-for="product in products">
-            {{product.id}} - {{product.name}} - {{product.description}}
+            {{product.id}} - {{product.name}} - {{product.description}} - {{product.value}}
         </p>
+    </div>
+
+    <div>
+        <input v-model="productViewModel.name" />
+        <input v-model="productViewModel.description" />
+        <input v-model="productViewModel.value" />
+        <button v-on:click="createProduct">Create new product</button>
     </div>
     
 </div>

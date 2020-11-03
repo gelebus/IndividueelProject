@@ -21,7 +21,7 @@ namespace Webshop.UI.Controllers
         }
 
         [HttpPost("products")]
-        public IActionResult CreateProduct(ProductViewModel productViewModel)
+        public IActionResult CreateProduct([FromBody] ProductViewModel productViewModel)
         {
             return Ok(new CreateProduct(_context).Run(productViewModel));
         }
@@ -45,7 +45,7 @@ namespace Webshop.UI.Controllers
         }
 
         [HttpPut("products")]
-        public IActionResult UpdateProduct(AdminProductViewModel productViewModel)
+        public IActionResult UpdateProduct([FromBody] AdminProductViewModel productViewModel)
         {
             return Ok(new UpdateProduct(_context).Run(productViewModel));
         }
