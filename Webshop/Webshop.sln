@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Logic", "Webshop.Bu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Data", "Webshop.Data\Webshop.Data.csproj", "{CA443CE2-EEEB-43CD-9B35-ADA003E04023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.UI", "Webshop.UI\Webshop.UI.csproj", "{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.UI", "Webshop.UI\Webshop.UI.csproj", "{BC00F406-E4DB-4849-BC86-6B9951BA1C3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLib", "ModelLib\ModelLib.csproj", "{4101130A-82FD-4756-A572-E754896EB768}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLib", "ModelLib\ModelLib.csproj", "{4101130A-82FD-4756-A572-E754896EB768}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

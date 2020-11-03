@@ -1,0 +1,25 @@
+﻿@page
+@model Webshop.UI.Pages.Admin.IndexModel
+@{
+}
+<div id="app">
+    <button v-on:click="getProducts">Get products</button>
+
+    <div>
+        <p v-for="product in products">
+            {{product.id}} - {{product.name}} - {{product.description}}
+        </p>
+    </div>
+    
+</div>
+
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="~/js/Admin/AdminMain.js"></script>
+}
+
+
+
