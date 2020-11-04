@@ -4,6 +4,7 @@
         loading: false,
         products: [],
         productViewModel: {
+            id: "0",
             name: "ProductName",
             value: "1,10",
             description: "ProductDescription"
@@ -20,7 +21,7 @@
         createProduct() {
             this.loading = true;
             axios.post('/Admin/products', this.productViewModel)
-                .then(result => { console.log(result); })
+                .then(result => { console.log(result); this.products.push(result.data); })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false });
         }

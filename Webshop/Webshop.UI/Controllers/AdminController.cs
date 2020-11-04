@@ -21,9 +21,9 @@ namespace Webshop.UI.Controllers
         }
 
         [HttpPost("products")]
-        public IActionResult CreateProduct([FromBody] ProductViewModel productViewModel)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(new CreateProduct(_context).Run(productViewModel));
+            return Ok(await new CreateProduct(_context).Run(productViewModel));
         }
 
         [HttpGet("products/{id}")]
@@ -39,15 +39,15 @@ namespace Webshop.UI.Controllers
         }
 
         [HttpDelete("products/{id}")]
-        public IActionResult RemoveProduct(int id)
+        public async Task<IActionResult> RemoveProduct(int id)
         {
-            return Ok(new RemoveProduct(_context).Run(id));
+            return Ok(await new RemoveProduct(_context).Run(id));
         }
 
         [HttpPut("products")]
-        public IActionResult UpdateProduct([FromBody] AdminProductViewModel productViewModel)
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(new UpdateProduct(_context).Run(productViewModel));
+            return Ok(await new UpdateProduct(_context).Run(productViewModel));
         }
 
     }

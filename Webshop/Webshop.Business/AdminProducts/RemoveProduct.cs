@@ -15,12 +15,13 @@ namespace Webshop.Logic.AdminProducts
             _context = context;
         }
 
-        public async Task Run(int id)
+        public async Task<bool> Run(int id)
         {
             var product = _context.Products.FirstOrDefault(a => a.Id == id);
             _context.Products.Remove(product);
 
             await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -17,17 +17,27 @@ namespace Webshop.Logic.AdminProducts
             _context = context;
         }
 
-        public async Task Run(ProductViewModel productViewModel)
+        public async Task<AdminProductViewModel> Run(ProductViewModel productViewModel)
         {
             productViewModel.Value = productViewModel.Value.Replace('.', ',');
-            _context.Products.Add(new Product()
+
+            Product product = new Product()
             {
                 Value = Convert.ToDecimal(productViewModel.Value),
                 Name = productViewModel.Name,
                 Description = productViewModel.Description
-            });
+            };
+            _context.Products.Add(product);
 
             await _context.SaveChangesAsync();
+
+            return new AdminProductViewModel()
+            {
+                Id = product.Id,
+                Value = product.Value,
+                Name = product.Name,
+                Description = product.Description
+            };
         }
     }
 }

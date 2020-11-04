@@ -16,10 +16,11 @@ namespace Webshop.Logic.AdminProducts
             _context = context;
         }
 
-        public async Task Run(AdminProductViewModel productViewModel)
+        public async Task<AdminProductViewModel> Run(ProductViewModel productViewModel)
         {
 
             await _context.SaveChangesAsync();
+            return new AdminProductViewModel();
         }
     }
 }
