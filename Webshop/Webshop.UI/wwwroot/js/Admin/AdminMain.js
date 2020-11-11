@@ -21,7 +21,7 @@
         createProduct() {
             this.loading = true;
             axios.post('/Admin/products', this.productViewModel)
-                .then(result => { console.log(result); this.products.push(result.data); })
+                .then(result => { console.log(result); this.products = [...this.products, result.data] ; }) //this.products.push(etc)
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false });
         }
