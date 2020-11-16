@@ -23,31 +23,31 @@ namespace Webshop.UI.Controllers
         [HttpPost("products")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(await new CreateProduct(_context).Run(productViewModel));
+            return Ok(await new AdminProductFunctions(_context).RunCreateProduct(productViewModel));
         }
 
         [HttpGet("products/{id}")]
         public IActionResult GetProduct(int id)
         {
-            return Ok(new GetProduct(_context).Run(id));
+            return Ok(new AdminProductFunctions(_context).RunGetProduct(id));
         }
 
         [HttpGet("products")]
         public IActionResult GetProducts()
         {
-            return Ok(new GetProducts(_context).Run());
+            return Ok(new AdminProductFunctions(_context).RunGetProducts());
         }
 
         [HttpDelete("products/{id}")]
         public async Task<IActionResult> RemoveProduct(int id)
         {
-            return Ok(await new RemoveProduct(_context).Run(id));
+            return Ok(await new AdminProductFunctions(_context).RunRemoveProduct(id));
         }
 
         [HttpPut("products")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(await new UpdateProduct(_context).Run(productViewModel));
+            return Ok(await new AdminProductFunctions(_context).RunUpdateProduct(productViewModel));
         }
 
     }
