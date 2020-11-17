@@ -8,12 +8,13 @@
         <input v-model="productViewModel.description" />
         <input v-model="productViewModel.value" />
         <button v-on:click="createProduct">Create new product</button>
+        <button v-on:click="updateProduct">Update product</button>
     </div>
-
-    <button v-on:click="getProducts">Get products</button>
     <div>
-        <p v-for="product in products">
+        <p v-for="(product, index) in products">
             {{product.id}} - {{product.name}} - {{product.description}}
+            <a v-on:click="editProduct(product.id,index)" style="color:cornflowerblue;">Edit</a>
+            <a v-on:click="deleteProduct(product.id,index) "style="color:red;">Remove</a>
         </p>
     </div>
 </div>

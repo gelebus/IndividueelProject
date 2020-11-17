@@ -45,7 +45,7 @@ namespace Webshop.UI.Controllers
         }
 
         [HttpPut("products")]
-        public async Task<IActionResult> UpdateProduct([FromBody] ProductViewModel productViewModel)
+        public async Task<IActionResult> UpdateProduct([FromBody] AdminProductViewModel productViewModel)
         {
             return Ok(await new AdminProductFunctions(_context).RunUpdateProduct(productViewModel));
         }

@@ -22,9 +22,16 @@ namespace Webshop.Data
 
             await _context.SaveChangesAsync();
         }
-        async Task IAdminProductFunctions.UpdateProduct()
+        async Task<Product> IAdminProductFunctions.UpdateProduct(Product request)
         {
+            var product = _context.Products.FirstOrDefault(a => a.Id == request.Id);
+
+            product.Name = request.Name;
+            product.Description = request.Description;
+            product.Value = request.Value;
+
             await _context.SaveChangesAsync();
+            return product;
         }
         async Task IAdminProductFunctions.RemoveProduct(int id)
         {
@@ -53,8 +60,6 @@ namespace Webshop.Data
         {
             return GetProducts();
         }
-
-
 
         IEnumerable<Product> GetProducts()
         {

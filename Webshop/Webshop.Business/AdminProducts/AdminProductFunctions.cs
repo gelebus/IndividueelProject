@@ -72,10 +72,24 @@ namespace Webshop.Logic.AdminProducts
             await iAdminProductFunctions.RemoveProduct(id);
             return true;
         }
-        public async Task<AdminProductViewModel> RunUpdateProduct(ProductViewModel productViewModel)
+        public async Task<AdminProductViewModel> RunUpdateProduct(AdminProductViewModel productViewModel)
         {
-            await iAdminProductFunctions.UpdateProduct();
-            return new AdminProductViewModel();
+            Product request = new Product()
+            {
+                Id = productViewModel.Id,
+                Description = productViewModel.Description,
+                Value = productViewModel.Value,
+                Name = productViewModel.Name
+            };
+            Product response = await iAdminProductFunctions.UpdateProduct(request);
+            AdminProductViewModel responseVm = new AdminProductViewModel()
+            {
+                Id = response.Id,
+                Description = response.Description,
+                Value = response.Value,
+                Name = response.Name
+            };
+            return responseVm;
         }
     }
 }

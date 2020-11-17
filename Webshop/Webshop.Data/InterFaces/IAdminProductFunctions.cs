@@ -9,7 +9,7 @@ namespace Webshop.Data.InterFaces
     public interface IAdminProductFunctions
     {
         Task CreateProduct(Product product);
-        Task UpdateProduct();
+        Task<Product> UpdateProduct(Product request);
         Task RemoveProduct(int id);
         Product GetProduct(int id);
         IEnumerable<Product> GetProducts();
