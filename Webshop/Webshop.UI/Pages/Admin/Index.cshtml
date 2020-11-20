@@ -2,20 +2,59 @@
 @model Webshop.UI.Pages.Admin.IndexModel
 @{
 }
-<div id="app">
-    <div>
-        <input v-model="productViewModel.name" />
-        <input v-model="productViewModel.description" />
-        <input v-model="productViewModel.value" />
-        <button v-on:click="createProduct">Create new product</button>
-        <button v-on:click="updateProduct">Update product</button>
-    </div>
-    <div>
-        <p v-for="(product, index) in products">
-            {{product.id}} - {{product.name}} - {{product.description}}
-            <a v-on:click="editProduct(product.id,index)" style="color:cornflowerblue;">Edit</a>
-            <a v-on:click="deleteProduct(product.id,index) "style="color:red;">Remove</a>
-        </p>
+
+<head>
+    <link rel="stylesheet" href="Css/Style.css">
+</head>
+
+<div id="app" class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="background">
+                <label style="font-size:25px;">Admin Menu</label>
+            </div>
+            <div class="background">
+                <a style="font-size:20px;">Products</a>
+                <br>
+                <a style="font-size:20px;">Stock</a>
+                <br>
+                <a style="font-size:20px;">Orders</a>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div>
+                <div style="overflow: scroll; height: 400px; overflow-x:hidden">
+                    <table class="table">
+                        <tr>
+                            <td style="font-weight:bold;">Id</td>
+                            <td style="font-weight:bold;">Product</td>
+                            <td style="font-weight:bold;">Description</td>
+                            <td style="font-weight:bold;">Value</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr v-for="(product, index) in products">
+                            <td>{{product.id}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.value}}</td>
+                            <td><a v-on:click="editProduct(product.id,index)" style="color:cornflowerblue;">Edit</a></td>
+                            <td><a v-on:click="deleteProduct(product.id,index) " style="color:red;">Remove</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+
+            <div>
+                <input v-model="productViewModel.name" />
+                <input v-model="productViewModel.description" />
+                <input v-model.number="productViewModel.value" />
+                <button v-on:click="createProduct" v-if="productViewModel.id == 0">Create new product</button>
+                <button v-on:click="updateProduct" v-else>Update product</button>
+                <button onclick="location.reload()" v-if="productViewModel.id != 0">cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 

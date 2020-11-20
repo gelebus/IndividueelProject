@@ -10,7 +10,6 @@
             value: "1,10",
             description: "ProductDescription"
         }
-
     },
     mounted() {
         this.getProducts();
@@ -21,7 +20,7 @@
             axios.get('/Admin/products')
                 .then(result => { console.log(result); this.products = result.data; })
                 .catch(error => { console.log(error); })
-                .then(() => { this.loading = false });
+                .then(() => { this.loading = false; });
         },
         getProduct(id) {
             this.loading = true;
@@ -36,28 +35,28 @@
                         value: product.value
                     };})
                 .catch(error => { console.log(error); })
-                .then(() => { this.loading = false });
+                .then(() => { this.loading = false; });
         },
         deleteProduct(id, index) {
             this.loading = true;
             axios.delete('/Admin/products/' + id)
                 .then(result => { console.log(result); this.products.splice(index, 1); })
                 .catch(error => { console.log(error); })
-                .then(() => { this.loading = false });
+                .then(() => { this.loading = false; });
         },
         createProduct() {
             this.loading = true;
             axios.post('/Admin/products', this.productViewModel)
-                .then(result => { console.log(result); this.products = [...this.products, result.data] ; }) //this.products.push(etc)
+                .then(result => { console.log(result); this.products = [...this.products, result.data] ; })
                 .catch(error => { console.log(error); })
-                .then(() => { this.loading = false });
+                .then(() => { this.loading = false; });
         },
         updateProduct() {
             this.loading = true;
             axios.put('/Admin/products', this.productViewModel)
-                .then(result => { console.log(result); this.products.splice(this.objectIndex, 1, result.data); }) //this.products.push(etc)
+                .then(result => { console.log(result); this.products.splice(this.objectIndex, 1, result.data); })
                 .catch(error => { console.log(error); })
-                .then(() => { this.loading = false });
+                .then(() => { this.loading = false; });
         },
         editProduct(id, index) {
             this.objectIndex = index;

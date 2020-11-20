@@ -1,0 +1,9 @@
+﻿
+.background {
+    background-color: lightcyan;
+    border:thick solid #0000FF;
+    border-width:2px;
+    border-color:black;
+    margin-bottom: -2px;
+}
+
