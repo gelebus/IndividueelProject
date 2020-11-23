@@ -3,23 +3,15 @@
 @{
 }
 
-<head>
-    <link rel="stylesheet" href="Css/Style.css">
-</head>
-
 <div id="app" class="container">
     <div class="row">
         <div class="col-sm-3">
-            <div class="background">
-                <label style="font-size:25px;">Admin Menu</label>
-            </div>
-            <div class="background">
-                <a style="font-size:20px;">Products</a>
-                <br>
-                <a style="font-size:20px;">Stock</a>
-                <br>
-                <a style="font-size:20px;">Orders</a>
-            </div>
+            <ul style="list-style-type:none">
+                <li><label style="font-size:25px;">Admin Menu</label></li>
+                <li><a asp-page="/Admin/Index" style="font-size:20px;">Products</a></li>
+                <li><a asp-page="/Admin/Stock" style="font-size:20px;">Stock</a></li>
+                <li><a asp-page="/Admin/Orders" style="font-size:20px;">Orders</a></li>
+            </ul>
         </div>
         <div class="col-sm-9">
             <div>
