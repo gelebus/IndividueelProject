@@ -18,7 +18,7 @@ namespace Webshop.Logic.AdminStock
             IAdminStockFunctions = new StockManager(context);
         }
 
-        public async Task<StockViewModel> CreateStock(StockViewModel request)
+        public async Task<StockViewModel> RunCreateStock(StockViewModel request)
         {
             var stock = new Stock()
             {
@@ -36,12 +36,12 @@ namespace Webshop.Logic.AdminStock
                 Description = stock.Description
             };
         }
-        public async Task<bool> RemoveStock(int id)
+        public async Task<bool> RunRemoveStock(int id)
         {
             await IAdminStockFunctions.RemoveStock(id);
             return true;
         }
-        public IEnumerable<Stock> UpdateStock(IEnumerable<StockViewModel> stockVms)
+        public Task<IEnumerable<Stock>> RunUpdateStock(IEnumerable<StockViewModel> stockVms)
         {
             List<Stock> stock = new List<Stock>();
 
@@ -55,23 +55,22 @@ namespace Webshop.Logic.AdminStock
                     Description = stockViewModel.Description
                 });
             }
-            IEnumerable<Stock> response = (IEnumerable<Stock>)IAdminStockFunctions.UpdateStock(stock); //list oplossing eventueel
-            return response;
+            IAdminStockFunctions.UpdateStock(stock); //list oplossing eventueel
+            return (Task<IEnumerable<Stock>>)(IEnumerable<Stock>)stock;
         }
-        public IEnumerable<StockViewModel> GetStock(int productId)
+        public IEnumerable<AdminProductViewModel> RunGetStock()
         {
-            IEnumerable<Stock> stockList = IAdminStockFunctions.GetStock(productId);
-            List<StockViewModel> stockvms = new List<StockViewModel>();
-            foreach(var stock in stockList)
+            var Stocks = IAdminStockFunctions.GetStock();
+            List<AdminProductViewModel> stockvms = new List<AdminProductViewModel>();
+            foreach(var stock in Stocks)
             {
-                stockvms.Add(new StockViewModel()
+                stockvms.Add(new AdminProductViewModel()
                 {
-                    StockId = stock.Id,
-                    ProductId = stock.ProductId,
-                    Quantity = stock.Quantity,
-                    Description = stock.Description
+                    Id = stock.Id,
+                    Description = stock.Description,
+                    Stock = stock.Stock
                 });
-            }
+            }   
             return stockvms;
         }
             

@@ -43,7 +43,6 @@
                 <input v-model="productViewModel.description" />
                 <input v-model ="productViewModel.value" v-if="productViewModel.id == 0" />
                 <input v-model.number="productViewModel.value" v-else/>
-                
                 <button v-on:click="createProduct" v-if="productViewModel.id == 0">Create new product</button>
                 <button v-on:click="updateProduct" v-else>Update product</button>
                 <button onclick="location.reload()" v-if="productViewModel.id != 0">cancel</button>

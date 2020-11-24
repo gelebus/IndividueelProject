@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Webshop.Data;
 using Webshop.Logic.AdminProducts;
+using Webshop.Logic.AdminStock;
 using Webshop.Logic.ViewModels;
 
 namespace Webshop.UI.Controllers
@@ -49,6 +50,35 @@ namespace Webshop.UI.Controllers
         {
             return Ok(await new AdminProductFunctions(_context).RunUpdateProduct(productViewModel));
         }
+
+
+
+
+        [HttpPost("stock")]
+        public async Task<IActionResult> CreateStock([FromBody] StockViewModel stockViewModel)
+        {
+            return Ok(await new AdminStockFunctions(_context).RunCreateStock(stockViewModel));
+        }
+
+        [HttpGet("stock")]
+        public IActionResult GetStock()
+        {
+            return Ok(new AdminStockFunctions(_context).RunGetStock());
+        }
+
+        [HttpDelete("stock/{id}")]
+        public async Task<IActionResult> RemoveStock(int id)
+        {
+            return Ok(await new AdminStockFunctions(_context).RunRemoveStock(id));
+        }
+
+        [HttpPut("stock")]
+        public async Task<IActionResult> UpdateStock([FromBody] IEnumerable<StockViewModel> stockViewModel)
+        {
+            return Ok(await new AdminStockFunctions(_context).RunUpdateStock(stockViewModel));
+        }
+
+
 
     }
 }
