@@ -41,7 +41,9 @@
             <div>
                 <input v-model="productViewModel.name" />
                 <input v-model="productViewModel.description" />
-                <input v-model.number="productViewModel.value" />
+                <input v-model ="productViewModel.value" v-if="productViewModel.id == 0" />
+                <input v-model.number="productViewModel.value" v-else/>
+                
                 <button v-on:click="createProduct" v-if="productViewModel.id == 0">Create new product</button>
                 <button v-on:click="updateProduct" v-else>Update product</button>
                 <button onclick="location.reload()" v-if="productViewModel.id != 0">cancel</button>
@@ -55,7 +57,7 @@
 {
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="~/js/Admin/AdminMain.js"></script>
+    <script src="~/js/Admin/Products.js"></script>
 }
 
 
