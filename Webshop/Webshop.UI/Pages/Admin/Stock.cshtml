@@ -13,7 +13,42 @@
             </ul>
         </div>
         <div class="col-sm-9">
-            <h2>Stock</h2>
+            <div id="app">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <table class="table">
+                            <tr v-for="product in products" v-on:click="selectProduct(product)">
+                                <td>{{product.description}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6"  v-if="currentSelectedProduct != null">
+                        <table class="table">
+                            <tr v-for="stock in currentSelectedProduct">
+                                <td><input v-model="stock.description" /></td>
+                                <td><input v-model="stock.quantity" /></td>
+                            </tr>
+                        </table>
+                        <a class="btn" v-on:click="updateStock">update products</a>
+                    </div>
+                    <div class="col-sm-3"  v-if="currentSelectedProduct != null">
+                        <h2>new stock</h2>
+                        <br>
+                        <label>description</label>
+                        <input v-model="currentStock.description" />
+                        <label>quantity</label>
+                        <input v-model="currentStock.quantity" />
+                        <a class="btn" v-on:click="createStock">add stock</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="~/js/Admin/Stock.js"></script>
+}

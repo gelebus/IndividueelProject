@@ -54,25 +54,25 @@ namespace Webshop.UI.Controllers
 
 
 
-        [HttpPost("stock")]
+        [HttpPost("stocks")]
         public async Task<IActionResult> CreateStock([FromBody] StockViewModel stockViewModel)
         {
             return Ok(await new AdminStockFunctions(_context).RunCreateStock(stockViewModel));
         }
 
-        [HttpGet("stock")]
+        [HttpGet("stocks")]
         public IActionResult GetStock()
         {
             return Ok(new AdminStockFunctions(_context).RunGetStock());
         }
 
-        [HttpDelete("stock/{id}")]
+        [HttpDelete("stocks/{id}")]
         public async Task<IActionResult> RemoveStock(int id)
         {
             return Ok(await new AdminStockFunctions(_context).RunRemoveStock(id));
         }
 
-        [HttpPut("stock")]
+        [HttpPut("stocks")]
         public async Task<IActionResult> UpdateStock([FromBody] IEnumerable<StockViewModel> stockViewModel)
         {
             return Ok(await new AdminStockFunctions(_context).RunUpdateStock(stockViewModel));
