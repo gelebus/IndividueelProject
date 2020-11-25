@@ -28,7 +28,7 @@ namespace Webshop.Data
 
             product.Name = request.Name;
             product.Description = request.Description;
-            product.Value = request.Value;
+            product.Value = request.Value;    //group by, order by, join
 
             await _context.SaveChangesAsync();
             return product;
