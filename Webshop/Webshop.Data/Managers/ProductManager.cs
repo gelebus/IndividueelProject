@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Webshop.Data
 
             product.Name = request.Name;
             product.Description = request.Description;
-            product.Value = request.Value;    //group by, order by, join
+            product.Value = request.Value;    
 
             await _context.SaveChangesAsync();
             return product;
@@ -63,13 +64,37 @@ namespace Webshop.Data
 
         IEnumerable<Product> GetProducts()
         {
-            IEnumerable<Product> products = _context.Products.ToList().Select(a => new Product
+            string connectionstring = "Server=mssql.fhict.local;Database=dbi407367_indiv2020;User Id=dbi407367_indiv2020;Password=r8u3u6d1;";
+            string command = "SELECT * FROM [Products]";
+            List<Product> products = new List<Product>();
+
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                using(SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+
+                    var reader = cmd.ExecuteReader();
+
+                    while(reader.Read())
+                    {
+                        products.Add(new Product()
+                        {
+                            Id = reader.GetInt32(0),
+                            Value = reader.GetDecimal(1),
+                            Name = reader.GetString(2),
+                            Description = reader.GetString(3)
+                        });
+                    }
+                }
+            }
+          /*IEnumerable<Product> products = _context.Products.ToList().Select(a => new Product
             {
                 Id = a.Id,
                 Description = a.Description,
                 Value = a.Value,
                 Name = a.Name
-            });
+            });*/
             return products;
         }
     }
