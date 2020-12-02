@@ -18,7 +18,7 @@ namespace Webshop.Logic.AdminStock
             IAdminStockFunctions = new StockManager(context);
         }
 
-        public async Task<StockViewModel> RunCreateStock(StockViewModel request)
+        public StockViewModel RunCreateStock(StockViewModel request)
         {
             var stock = new Stock()
             {
@@ -26,7 +26,7 @@ namespace Webshop.Logic.AdminStock
                 Quantity = request.Quantity,
                 Description = request.Description
             };
-            await IAdminStockFunctions.CreateStock(stock);
+            stock = IAdminStockFunctions.CreateStock(stock);
 
             return new StockViewModel() 
             { 

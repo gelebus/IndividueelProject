@@ -52,8 +52,6 @@ namespace Webshop.Data
                 }
             }
             return Product;
-            //_context.Products.Add(product);
-            //await _context.SaveChangesAsync();
         }
         Product IAdminProductFunctions.UpdateProduct(Product request)
         {
@@ -73,13 +71,6 @@ namespace Webshop.Data
                     cmd.ExecuteNonQuery();
                 }
             }
-                /*var product = _context.Products.FirstOrDefault(a => a.Id == request.Id);
-
-                product.Name = request.Name;
-                product.Description = request.Description;
-                product.Value = request.Value;    
-
-                await _context.SaveChangesAsync();*/
             return newProduct;
         }
         void IAdminProductFunctions.RemoveProduct(int id)
@@ -95,10 +86,6 @@ namespace Webshop.Data
                     cmd.ExecuteNonQuery();
                 }
             }
-                /*var product = _context.Products.FirstOrDefault(a => a.Id == id);
-                _context.Products.Remove(product);
-
-                await _context.SaveChangesAsync();*/
         }
         Product IAdminProductFunctions.GetProduct(int id)
         {
@@ -125,13 +112,6 @@ namespace Webshop.Data
                     }
                 }
             }
-            /*Product product = _context.Products.Where(a => a.Id == id).Select(a => new Product
-            {
-                Id = a.Id,
-                Value = a.Value,
-                Name = a.Name,
-                Description = a.Description
-            }).FirstOrDefault();*/
             return Product;
         }
 
@@ -169,13 +149,6 @@ namespace Webshop.Data
                     }
                 }
             }
-          /*IEnumerable<Product> products = _context.Products.ToList().Select(a => new Product
-            {
-                Id = a.Id,
-                Description = a.Description,
-                Value = a.Value,
-                Name = a.Name
-            });*/
             return products;
         }
     }

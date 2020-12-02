@@ -9,7 +9,7 @@ namespace Webshop.Interface
 {
     public interface IAdminStockFunctions
     {
-        Task CreateStock(Stock stock);
+        Stock CreateStock(Stock stock);
         Task UpdateStock(IEnumerable<Stock> stock);
         IEnumerable<StockResponse> GetStock();
         Task RemoveStock(int id);

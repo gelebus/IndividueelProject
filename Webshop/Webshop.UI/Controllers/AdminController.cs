@@ -55,9 +55,9 @@ namespace Webshop.UI.Controllers
 
 
         [HttpPost("stocks")]
-        public async Task<IActionResult> CreateStock([FromBody] StockViewModel stockViewModel)
+        public IActionResult CreateStock([FromBody] StockViewModel stockViewModel)
         {
-            return Ok(await new AdminStockFunctions(_context).RunCreateStock(stockViewModel));
+            return Ok(new AdminStockFunctions(_context).RunCreateStock(stockViewModel));
         }
 
         [HttpGet("stocks")]
