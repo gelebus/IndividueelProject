@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Webshop.ModelLib.Models;
 
-namespace Webshop.Data.InterFaces
+namespace Webshop.Interface
 {
     public interface IUserProductFunctions
     {

@@ -3,15 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Webshop.Data.Managers;
 
-namespace Webshop.Data.InterFaces
+
+namespace Webshop.Interface
 {
     public interface IAdminStockFunctions
     {
         Task CreateStock(Stock stock);
         Task UpdateStock(IEnumerable<Stock> stock);
-        IEnumerable<StockManager.GetStockResponse> GetStock();
+        IEnumerable<StockResponse> GetStock();
         Task RemoveStock(int id);
+
+        public class StockResponse
+        {
+            public int Id { get; set; }
+            public string Description { get; set; }
+            public IEnumerable<Stock> Stock { get; set; }
+        }
     }
 }

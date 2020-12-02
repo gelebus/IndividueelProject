@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Webshop.Data;
-using Webshop.Data.InterFaces;
+using Webshop.Interface;
 using Webshop.Logic.ViewModels;
 using Webshop.ModelLib.Models;
 

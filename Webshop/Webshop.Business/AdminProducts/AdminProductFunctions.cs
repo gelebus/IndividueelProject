@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webshop.Data;
-using Webshop.Data.InterFaces;
+using Webshop.Interface;
 using Webshop.Logic.ViewModels;
 using Webshop.ModelLib.Models;
 

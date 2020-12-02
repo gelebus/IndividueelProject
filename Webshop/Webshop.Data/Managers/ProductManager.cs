@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Webshop.Data.InterFaces;
+using Webshop.Interface;
 using Webshop.ModelLib.Models;
 
 namespace Webshop.Data

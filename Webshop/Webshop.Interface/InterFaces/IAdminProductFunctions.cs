@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Webshop.ModelLib.Models;
 
-namespace Webshop.Data.InterFaces
+namespace Webshop.Interface
 {
     public interface IAdminProductFunctions
     {

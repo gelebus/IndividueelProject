@@ -14,6 +14,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ModelLib\ModelLib.csproj" />
+	  <ProjectReference Include="..\Webshop.Interface\Webshop.Interface.csproj" />
 	</ItemGroup>
 
 </Project>

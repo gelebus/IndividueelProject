@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Webshop.Data.InterFaces;
+using Webshop.Interface;
 
 namespace Webshop.Data.Managers
 {
@@ -22,11 +22,11 @@ namespace Webshop.Data.Managers
             _context.Stock.Add(stock);
             await _context.SaveChangesAsync();
         }
-        IEnumerable<GetStockResponse> IAdminStockFunctions.GetStock()
+        IEnumerable<IAdminStockFunctions.StockResponse> IAdminStockFunctions.GetStock()
         {
             var stock = _context.Products
                 .Include(a => a.Stock)
-                .Select(a => new GetStockResponse
+                .Select(a => new IAdminStockFunctions.StockResponse
                 {
                     Id = a.Id,
                     Description = a.Description,
@@ -51,13 +51,6 @@ namespace Webshop.Data.Managers
         {
             _context.UpdateRange(stock);
             await _context.SaveChangesAsync();
-        }
-
-        public class GetStockResponse
-        {
-            public int Id { get; set; }
-            public string Description { get; set; }
-            public IEnumerable<Stock> Stock { get; set; }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Webshop.Data;
-using Webshop.Data.InterFaces;
+using Webshop.Interface;
 using Webshop.Data.Managers;
 using Webshop.Logic.ViewModels;
 
@@ -55,7 +55,7 @@ namespace Webshop.Logic.AdminStock
                     Description = stockViewModel.Description
                 });
             }
-            IAdminStockFunctions.UpdateStock(stock); //list oplossing eventueel
+            IAdminStockFunctions.UpdateStock(stock); 
             return (Task<IEnumerable<Stock>>)(IEnumerable<Stock>)stock;
         }
         public IEnumerable<AdminProductViewModel> RunGetStock()
