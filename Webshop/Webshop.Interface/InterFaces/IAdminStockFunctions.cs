@@ -12,7 +12,7 @@ namespace Webshop.Interface
         Stock CreateStock(Stock stock);
         Task UpdateStock(IEnumerable<Stock> stock);
         IEnumerable<StockResponse> GetStock();
-        Task RemoveStock(int id);
+        void RemoveStock(int id);
 
         public class StockResponse
         {

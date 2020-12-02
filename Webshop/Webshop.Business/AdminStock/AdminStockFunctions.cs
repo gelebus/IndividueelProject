@@ -38,7 +38,7 @@ namespace Webshop.Logic.AdminStock
         }
         public async Task<bool> RunRemoveStock(int id)
         {
-            await IAdminStockFunctions.RemoveStock(id);
+            IAdminStockFunctions.RemoveStock(id);
             return true;
         }
         public Task<IEnumerable<Stock>> RunUpdateStock(IEnumerable<StockViewModel> stockVms)

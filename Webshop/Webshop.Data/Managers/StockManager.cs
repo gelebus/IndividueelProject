@@ -10,7 +10,7 @@ using Webshop.Interface;
 
 namespace Webshop.Data.Managers
 {
-    public class StockManager:IAdminStockFunctions
+    public class StockManager : IAdminStockFunctions
     {
         private AppDbContext _context;
         string connectionstring;
@@ -71,15 +71,27 @@ namespace Webshop.Data.Managers
                         Quantity = b.Quantity
                     })
                 })
-                .ToList(); 
+                .ToList();
 
             return stock;
         }
-        async Task IAdminStockFunctions.RemoveStock(int id)
+        void IAdminStockFunctions.RemoveStock(int id)
         {
-            var stock = _context.Stock.FirstOrDefault(a => a.Id == id);
+            string command = "DELETE FROM [Stock] WHERE Id = @SId";
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+                    cmd.Parameters.Add("@SId", System.Data.SqlDbType.Int).Value = id;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            /*var stock = _context.Stock.FirstOrDefault(a => a.Id == id);
             _context.Stock.Remove(stock);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
         }
         async Task IAdminStockFunctions.UpdateStock(IEnumerable<Stock> stock)
         {

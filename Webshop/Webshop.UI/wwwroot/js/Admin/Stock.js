@@ -15,7 +15,7 @@
         }
     },
     mounted() {
-        this.getStock();
+        this.getStock(); //getidofproduct
     },
     methods: {
         getStock() {
