@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,11 @@ namespace Webshop.Logic.AdminProducts
 
         public AdminProductFunctions(AppDbContext context)
         {
+            string connectionstring = context.Database.GetDbConnection().ConnectionString;
             iAdminProductFunctions = new ProductManager(context);
         }
 
-        public async Task<AdminProductViewModel> RunCreateProduct(ProductViewModel productViewModel)
+        public AdminProductViewModel RunCreateProduct(ProductViewModel productViewModel)
         {
             productViewModel.Value = productViewModel.Value.Replace('.', ',');
             Product product = new Product()
@@ -28,7 +30,7 @@ namespace Webshop.Logic.AdminProducts
                 Name = productViewModel.Name,
                 Description = productViewModel.Description
             };
-            await iAdminProductFunctions.CreateProduct(product);
+            product = iAdminProductFunctions.CreateProduct(product);
 
             return new AdminProductViewModel()
             {
@@ -67,12 +69,12 @@ namespace Webshop.Logic.AdminProducts
             }
             return productVms;
         }
-        public async Task<bool> RunRemoveProduct(int id)
+        public bool RunRemoveProduct(int id)
         {
-            await iAdminProductFunctions.RemoveProduct(id);
+            iAdminProductFunctions.RemoveProduct(id);
             return true;
         }
-        public async Task<AdminProductViewModel> RunUpdateProduct(AdminProductViewModel productViewModel)
+        public AdminProductViewModel RunUpdateProduct(AdminProductViewModel productViewModel)
         {
             Product request = new Product()
             {
@@ -81,7 +83,7 @@ namespace Webshop.Logic.AdminProducts
                 Value = productViewModel.Value,
                 Name = productViewModel.Name
             };
-            Product response = await iAdminProductFunctions.UpdateProduct(request);
+            Product response = iAdminProductFunctions.UpdateProduct(request);
             AdminProductViewModel responseVm = new AdminProductViewModel()
             {
                 Id = response.Id,

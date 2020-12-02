@@ -8,9 +8,9 @@ namespace Webshop.Data.InterFaces
 {
     public interface IAdminProductFunctions
     {
-        Task CreateProduct(Product product);
-        Task<Product> UpdateProduct(Product request);
-        Task RemoveProduct(int id);
+        Product CreateProduct(Product product);
+        Product UpdateProduct(Product request);
+        void RemoveProduct(int id);
         Product GetProduct(int id);
         IEnumerable<Product> GetProducts();
     }
