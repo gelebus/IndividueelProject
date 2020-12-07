@@ -77,13 +77,14 @@ namespace Webshop.Data.Managers
                             Description = reader.GetString(1)
                         });
                     }
+                    reader.Close();
                 }
                 using (SqlCommand cmd = new SqlCommand(command2, sqlconnection))
                 {
-                    var reader = cmd.ExecuteReader();
                     foreach (var s in stock)
                     {
                         cmd.Parameters.Add("@PId", System.Data.SqlDbType.Int).Value = s.Id;
+                        var reader = cmd.ExecuteReader();
                         List<Stock> stocks = new List<Stock>();
                         while (reader.Read())
                         {
@@ -94,6 +95,8 @@ namespace Webshop.Data.Managers
                             });
                         }
                         s.Stock = stocks;
+                        reader.Close();
+                        cmd.Parameters.Clear();
                     }
                 }
             }
