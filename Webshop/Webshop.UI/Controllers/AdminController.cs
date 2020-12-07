@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Webshop.Data;
-using Webshop.Logic.AdminProducts;
-using Webshop.Logic.AdminStock;
+using Webshop.Logic.Products;
+using Webshop.Logic.Stock;
 using Webshop.Logic.ViewModels;
 
 namespace Webshop.UI.Controllers
@@ -24,31 +24,31 @@ namespace Webshop.UI.Controllers
         [HttpPost("products")]
         public IActionResult CreateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(new AdminProductFunctions(_context).RunCreateProduct(productViewModel));
+            return Ok(new ProductFunctions(_context).RunCreateProduct(productViewModel));
         }
 
         [HttpGet("products/{id}")]
         public IActionResult GetProduct(int id)
         {
-            return Ok(new AdminProductFunctions(_context).RunGetProduct(id));
+            return Ok(new ProductFunctions(_context).RunGetProduct(id));
         }
 
         [HttpGet("products")]
         public IActionResult GetProducts()
         {
-            return Ok(new AdminProductFunctions(_context).RunGetProducts());
+            return Ok(new ProductFunctions(_context).RunGetProducts());
         }
 
         [HttpDelete("products/{id}")]
         public IActionResult RemoveProduct(int id)
         {
-            return Ok(new AdminProductFunctions(_context).RunRemoveProduct(id));
+            return Ok(new ProductFunctions(_context).RunRemoveProduct(id));
         }
 
         [HttpPut("products")]
         public IActionResult UpdateProduct([FromBody] AdminProductViewModel productViewModel)
         {
-            return Ok(new AdminProductFunctions(_context).RunUpdateProduct(productViewModel));
+            return Ok(new ProductFunctions(_context).RunUpdateProduct(productViewModel));
         }
 
 

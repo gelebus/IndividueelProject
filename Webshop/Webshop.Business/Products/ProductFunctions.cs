@@ -9,15 +9,17 @@ using Webshop.Interface;
 using Webshop.Logic.ViewModels;
 
 
-namespace Webshop.Logic.AdminProducts
+namespace Webshop.Logic.Products
 {
-    public class AdminProductFunctions
+    public class ProductFunctions
     {
         private IAdminProductFunctions iAdminProductFunctions;
+        private IUserProductFunctions iUserProductFunctions;
 
-        public AdminProductFunctions(AppDbContext context)
+        public ProductFunctions(AppDbContext context)
         {
             iAdminProductFunctions = new ProductManager(context);
+            iUserProductFunctions = new ProductManager(context);
         }
 
         public AdminProductViewModel RunCreateProduct(ProductViewModel productViewModel)
@@ -65,6 +67,23 @@ namespace Webshop.Logic.AdminProducts
                     Name = product.Name
                 };
                 productVms.Add(adminProductViewModel);
+            }
+            return productVms;
+        }
+        public IEnumerable<ProductViewModel> RunGetUserProducts()
+        {
+            List<ProductViewModel> productVms = new List<ProductViewModel>();
+            IEnumerable<ProductDTO> products = iUserProductFunctions.GetProducts();
+
+            foreach (ProductDTO product in products)
+            {
+                ProductViewModel ProductViewModel = new ProductViewModel()
+                {
+                    Description = product.Description,
+                    Value = $"€{product.Value.ToString("N2")}",
+                    Name = product.Name
+                };
+                productVms.Add(ProductViewModel);
             }
             return productVms;
         }

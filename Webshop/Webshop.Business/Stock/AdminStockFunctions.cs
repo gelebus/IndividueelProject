@@ -7,7 +7,7 @@ using Webshop.Interface;
 using Webshop.Data.Managers;
 using Webshop.Logic.ViewModels;
 
-namespace Webshop.Logic.AdminStock
+namespace Webshop.Logic.Stock
 {
     public class AdminStockFunctions
     {
