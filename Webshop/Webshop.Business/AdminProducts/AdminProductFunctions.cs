@@ -17,7 +17,6 @@ namespace Webshop.Logic.AdminProducts
 
         public AdminProductFunctions(AppDbContext context)
         {
-            string connectionstring = context.Database.GetDbConnection().ConnectionString;
             iAdminProductFunctions = new ProductManager(context);
         }
 
