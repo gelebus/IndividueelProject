@@ -3,11 +3,7 @@
     data: {
         loading:false,
         products: [],
-        currentSelectedProduct: {
-            id: 0,
-            description: "test",
-            stock: []
-        },
+        currentSelectedProduct: null,
         currentStock: {
             productId: 0,
             quantity: 12,
@@ -15,7 +11,7 @@
         }
     },
     mounted() {
-        this.getStock(); //getidofproduct
+        this.getStock(); 
     },
     methods: {
         getStock() {
@@ -26,11 +22,9 @@
                 .then(() => { this.loading = false; });
         },
         selectProduct(product) {
-            this.currentSelectedProduct.id = product.id; //doesnt work yet
-            this.currentSelectedProduct.description = product.description; //doesnt work yet
-            this.currentSelectedProduct.stock = product.stock; //doesnt work yet
+            this.currentSelectedProduct = product;
             this.currentStock.productId = product.Id;
-            console.log(product);
+            console.log(currentStock);
         },
         updateStock() {
 

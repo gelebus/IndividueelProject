@@ -36,12 +36,12 @@ namespace Webshop.Logic.AdminStock
                 Description = stock.Description
             };
         }
-        public async Task<bool> RunRemoveStock(int id)
+        public bool RunRemoveStock(int id)
         {
             IAdminStockFunctions.RemoveStock(id);
             return true;
         }
-        public Task<IEnumerable<Stock>> RunUpdateStock(IEnumerable<StockViewModel> stockVms)
+        public IEnumerable<Stock> RunUpdateStock(IEnumerable<StockViewModel> stockVms)
         {
             List<Stock> stock = new List<Stock>();
 
@@ -56,7 +56,7 @@ namespace Webshop.Logic.AdminStock
                 });
             }
             IAdminStockFunctions.UpdateStock(stock); 
-            return (Task<IEnumerable<Stock>>)(IEnumerable<Stock>)stock;
+            return stock;
         }
         public IEnumerable<AdminProductViewModel> RunGetStock()
         {

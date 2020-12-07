@@ -58,7 +58,46 @@ namespace Webshop.Data.Managers
         }
         IEnumerable<IAdminStockFunctions.StockResponse> IAdminStockFunctions.GetStock()
         {
-            var stock = _context.Products
+            var stock = new List<IAdminStockFunctions.StockResponse>();
+            string command = "SELECT Id, Description FROM [Products]";
+            string command2 = "SELECT Quantity, Description FROM [Stock] WHERE ProductId = @PId";
+
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                sqlconnection.Open();
+                using(SqlCommand cmd = new SqlCommand(command,sqlconnection))
+                {
+                    var reader = cmd.ExecuteReader();
+
+                    while(reader.Read())
+                    {
+                        stock.Add(new IAdminStockFunctions.StockResponse()
+                        {
+                            Id = reader.GetInt32(0),
+                            Description = reader.GetString(1)
+                        });
+                    }
+                }
+                using (SqlCommand cmd = new SqlCommand(command2, sqlconnection))
+                {
+                    var reader = cmd.ExecuteReader();
+                    foreach (var s in stock)
+                    {
+                        cmd.Parameters.Add("@PId", System.Data.SqlDbType.Int).Value = s.Id;
+                        List<Stock> stocks = new List<Stock>();
+                        while (reader.Read())
+                        {
+                            stocks.Add(new Stock()
+                            {
+                                Quantity = reader.GetInt32(0),
+                                Description = reader.GetString(1)
+                            });
+                        }
+                        s.Stock = stocks;
+                    }
+                }
+            }
+            /*var stock = _context.Products
                 .Include(a => a.Stock)
                 .Select(a => new IAdminStockFunctions.StockResponse
                 {
@@ -68,11 +107,12 @@ namespace Webshop.Data.Managers
                     {
                         Id = b.Id,
                         Description = b.Description,
-                        Quantity = b.Quantity
+                        Quantity = b.Quantity,
                     })
                 })
                 .ToList();
 
+            return stock;*/
             return stock;
         }
         void IAdminStockFunctions.RemoveStock(int id)
@@ -93,10 +133,32 @@ namespace Webshop.Data.Managers
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();*/
         }
-        async Task IAdminStockFunctions.UpdateStock(IEnumerable<Stock> stock)
+        void IAdminStockFunctions.UpdateStock(IEnumerable<Stock> Stock)
         {
-            _context.UpdateRange(stock);
-            await _context.SaveChangesAsync();
+            foreach (var stock in Stock)
+            {
+                UpdateStock(stock);
+            }
+            /*_context.UpdateRange(stock);
+            await _context.SaveChangesAsync();*/
+        }
+
+        void UpdateStock(Stock stock)
+        {
+            string command = "UPDATE Stock SET Quantity = @SQuantity, Description = @SDescription WHERE Id = @SId";
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+                    cmd.Parameters.Add("@SQuantity", System.Data.SqlDbType.Int).Value = stock.Quantity;
+                    cmd.Parameters.Add("@SDescription", System.Data.SqlDbType.NVarChar).Value = stock.Description;
+                    cmd.Parameters.Add("@SId", System.Data.SqlDbType.Int).Value = stock.Id;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
         }
     }
 }
