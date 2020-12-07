@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webshop.Interface;
-using Webshop.ModelLib.Models;
 
 namespace Webshop.Data
 {
@@ -19,9 +18,9 @@ namespace Webshop.Data
         {
             connectionstring = context.Database.GetDbConnection().ConnectionString;
         }
-        Product IAdminProductFunctions.CreateProduct(Product product)
+        ProductDTO IAdminProductFunctions.CreateProduct(ProductDTO product)
         {
-            Product Product = new Product();
+            ProductDTO Product = new ProductDTO();
             string command1 = "INSERT INTO Products (Value,Name,Description) VALUES(@ProductValue,@ProductName,@ProductDesc)";
             string command2 = "SELECT * FROM [Products] WHERE Id IN(SELECT Max(Id) FROM [Products])";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
@@ -41,7 +40,7 @@ namespace Webshop.Data
 
                     while (reader.Read())
                     {
-                        Product = new Product()
+                        Product = new ProductDTO()
                         {
                             Id = reader.GetInt32(0),
                             Value = reader.GetDecimal(1),
@@ -53,9 +52,9 @@ namespace Webshop.Data
             }
             return Product;
         }
-        Product IAdminProductFunctions.UpdateProduct(Product request)
+        ProductDTO IAdminProductFunctions.UpdateProduct(ProductDTO request)
         {
-            Product newProduct = request;
+            ProductDTO newProduct = request;
             string command = "UPDATE [Products] SET Value = @PValue,Name = @PName,Description = @PDescription WHERE Id = @PId";
 
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
@@ -87,9 +86,9 @@ namespace Webshop.Data
                 }
             }
         }
-        Product IAdminProductFunctions.GetProduct(int id)
+        ProductDTO IAdminProductFunctions.GetProduct(int id)
         {
-            Product Product = new Product();
+            ProductDTO Product = new ProductDTO();
             string command = "SELECT * FROM [Products] WHERE Id = @Id";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
             {
@@ -102,7 +101,7 @@ namespace Webshop.Data
 
                     while (reader.Read())
                     {
-                        Product = new Product()
+                        Product = new ProductDTO()
                         {
                             Id = reader.GetInt32(0),
                             Value = reader.GetDecimal(1),
@@ -115,19 +114,19 @@ namespace Webshop.Data
             return Product;
         }
 
-        IEnumerable<Product> IAdminProductFunctions.GetProducts()
+        IEnumerable<ProductDTO> IAdminProductFunctions.GetProducts()
         {
             return GetProducts();
         }
-        IEnumerable<Product> IUserProductFunctions.GetProducts()
+        IEnumerable<ProductDTO> IUserProductFunctions.GetProducts()
         {
             return GetProducts();
         }
 
-        IEnumerable<Product> GetProducts()
+        IEnumerable<ProductDTO> GetProducts()
         {
             string command = "SELECT * FROM [Products]";
-            List<Product> products = new List<Product>();
+            List<ProductDTO> products = new List<ProductDTO>();
 
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
             {
@@ -139,7 +138,7 @@ namespace Webshop.Data
 
                     while(reader.Read())
                     {
-                        products.Add(new Product()
+                        products.Add(new ProductDTO()
                         {
                             Id = reader.GetInt32(0),
                             Value = reader.GetDecimal(1),

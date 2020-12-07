@@ -5,7 +5,7 @@ using System.Text;
 using Webshop.Data;
 using Webshop.Interface;
 using Webshop.Logic.ViewModels;
-using Webshop.ModelLib.Models;
+
 
 namespace Webshop.Logic.Products
 {
@@ -20,9 +20,9 @@ namespace Webshop.Logic.Products
         public IEnumerable<ProductViewModel> RunGetProducts()
         {
             List<ProductViewModel> productVms = new List<ProductViewModel>();
-            IEnumerable<Product> products = iUserProductFunctions.GetProducts();
+            IEnumerable<ProductDTO> products = iUserProductFunctions.GetProducts();
 
-            foreach (Product product in products)
+            foreach (ProductDTO product in products)
             {
                 ProductViewModel ProductViewModel = new ProductViewModel()
                 {

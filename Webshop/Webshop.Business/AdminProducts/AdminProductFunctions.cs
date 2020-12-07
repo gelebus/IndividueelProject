@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Webshop.Data;
 using Webshop.Interface;
 using Webshop.Logic.ViewModels;
-using Webshop.ModelLib.Models;
+
 
 namespace Webshop.Logic.AdminProducts
 {
@@ -24,7 +24,7 @@ namespace Webshop.Logic.AdminProducts
         public AdminProductViewModel RunCreateProduct(ProductViewModel productViewModel)
         {
             productViewModel.Value = productViewModel.Value.Replace('.', ',');
-            Product product = new Product()
+            ProductDTO product = new ProductDTO()
             {
                 Value = Convert.ToDecimal(productViewModel.Value),
                 Name = productViewModel.Name,
@@ -42,7 +42,7 @@ namespace Webshop.Logic.AdminProducts
         }
         public AdminProductViewModel RunGetProduct(int id)
         {
-            Product product = iAdminProductFunctions.GetProduct(id);
+            ProductDTO product = iAdminProductFunctions.GetProduct(id);
             return new AdminProductViewModel()
             {
                 Id = product.Id,
@@ -54,9 +54,9 @@ namespace Webshop.Logic.AdminProducts
         public IEnumerable<AdminProductViewModel> RunGetProducts()
         {
             List<AdminProductViewModel> productVms = new List<AdminProductViewModel>();
-            IEnumerable<Product> products = iAdminProductFunctions.GetProducts();
+            IEnumerable<ProductDTO> products = iAdminProductFunctions.GetProducts();
             
-            foreach (Product product in products)
+            foreach (ProductDTO product in products)
             {
                 AdminProductViewModel adminProductViewModel = new AdminProductViewModel()
                 {
@@ -76,14 +76,14 @@ namespace Webshop.Logic.AdminProducts
         }
         public AdminProductViewModel RunUpdateProduct(AdminProductViewModel productViewModel)
         {
-            Product request = new Product()
+            ProductDTO request = new ProductDTO()
             {
                 Id = productViewModel.Id,
                 Description = productViewModel.Description,
                 Value = productViewModel.Value,
                 Name = productViewModel.Name
             };
-            Product response = iAdminProductFunctions.UpdateProduct(request);
+            ProductDTO response = iAdminProductFunctions.UpdateProduct(request);
             AdminProductViewModel responseVm = new AdminProductViewModel()
             {
                 Id = response.Id,

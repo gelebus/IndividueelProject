@@ -22,7 +22,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-sm-6"  v-if="currentSelectedProduct != null">
+                    <div class="col-sm-6"  v-if="currentSelectedProduct.stock != 0">
                         <table class="table">
                             <tr v-for="stock in currentSelectedProduct">
                                 <td><input v-model="stock.description" /></td>

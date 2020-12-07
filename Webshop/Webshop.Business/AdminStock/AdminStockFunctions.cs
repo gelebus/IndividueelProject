@@ -1,5 +1,4 @@
-﻿using ModelLib.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +19,7 @@ namespace Webshop.Logic.AdminStock
 
         public StockViewModel RunCreateStock(StockViewModel request)
         {
-            var stock = new Stock()
+            var stock = new StockDTO()
             {
                 ProductId = request.ProductId,
                 Quantity = request.Quantity,
@@ -41,13 +40,13 @@ namespace Webshop.Logic.AdminStock
             IAdminStockFunctions.RemoveStock(id);
             return true;
         }
-        public IEnumerable<Stock> RunUpdateStock(IEnumerable<StockViewModel> stockVms)
+        public IEnumerable<StockDTO> RunUpdateStock(IEnumerable<StockViewModel> stockVms)
         {
-            List<Stock> stock = new List<Stock>();
+            List<StockDTO> stock = new List<StockDTO>();
 
             foreach (StockViewModel stockViewModel in stockVms)
             {
-                stock.Add(new Stock() 
+                stock.Add(new StockDTO() 
                 { 
                     Id = stockViewModel.StockId,
                     ProductId = stockViewModel.ProductId,
@@ -61,17 +60,29 @@ namespace Webshop.Logic.AdminStock
         public IEnumerable<AdminProductViewModel> RunGetStock()
         {
             var Stocks = IAdminStockFunctions.GetStock();
-            List<AdminProductViewModel> stockvms = new List<AdminProductViewModel>();
+            List<AdminProductViewModel> productvms = new List<AdminProductViewModel>();
+            
             foreach(var stock in Stocks)
             {
-                stockvms.Add(new AdminProductViewModel()
+                List<StockViewModel> stockvms = new List<StockViewModel>();
+                foreach(var s in stock.Stock)
+                {
+                    stockvms.Add(new StockViewModel()
+                    {
+                        ProductId = s.ProductId,
+                        StockId = s.Id,
+                        Description = s.Description,
+                        Quantity = s.Quantity
+                    });
+                }
+                productvms.Add(new AdminProductViewModel()
                 {
                     Id = stock.Id,
                     Description = stock.Description,
-                    Stock = stock.Stock
+                    Stock = stockvms
                 });
             }   
-            return stockvms;
+            return productvms;
         }
             
 

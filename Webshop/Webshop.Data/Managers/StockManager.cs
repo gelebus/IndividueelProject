@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using ModelLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,15 @@ namespace Webshop.Data.Managers
 {
     public class StockManager : IAdminStockFunctions
     {
-        private AppDbContext _context;
-        string connectionstring;
+        readonly string connectionstring;
 
         public StockManager(AppDbContext context)
         {
-            _context = context;
             connectionstring = context.Database.GetDbConnection().ConnectionString;
         }
-        Stock IAdminStockFunctions.CreateStock(Stock stock)
+        StockDTO IAdminStockFunctions.CreateStock(StockDTO stock)
         {
-            Stock newStock = stock;
+            StockDTO newStock = stock;
             string command1 = "INSERT INTO Stock (Quantity,Description,ProductId) VALUES(@SQuantity,@SDesc,@SProductId)";
             string command2 = "SELECT * FROM [Stock] WHERE Id IN(SELECT Max(Id) FROM [Stock])";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
@@ -42,7 +39,7 @@ namespace Webshop.Data.Managers
 
                     while (reader.Read())
                     {
-                        newStock = new Stock()
+                        newStock = new StockDTO()
                         {
                             Id = reader.GetInt32(0),
                             Quantity = reader.GetInt32(1),
@@ -85,11 +82,12 @@ namespace Webshop.Data.Managers
                     {
                         cmd.Parameters.Add("@PId", System.Data.SqlDbType.Int).Value = s.Id;
                         var reader = cmd.ExecuteReader();
-                        List<Stock> stocks = new List<Stock>();
+                        List<StockDTO> stocks = new List<StockDTO>();
                         while (reader.Read())
                         {
-                            stocks.Add(new Stock()
+                            stocks.Add(new StockDTO()
                             {
+                                ProductId = s.Id,
                                 Quantity = reader.GetInt32(0),
                                 Description = reader.GetString(1)
                             });
@@ -100,22 +98,6 @@ namespace Webshop.Data.Managers
                     }
                 }
             }
-            /*var stock = _context.Products
-                .Include(a => a.Stock)
-                .Select(a => new IAdminStockFunctions.StockResponse
-                {
-                    Id = a.Id,
-                    Description = a.Description,
-                    Stock = a.Stock.Select(b => new Stock
-                    {
-                        Id = b.Id,
-                        Description = b.Description,
-                        Quantity = b.Quantity,
-                    })
-                })
-                .ToList();
-
-            return stock;*/
             return stock;
         }
         void IAdminStockFunctions.RemoveStock(int id)
@@ -136,7 +118,7 @@ namespace Webshop.Data.Managers
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();*/
         }
-        void IAdminStockFunctions.UpdateStock(IEnumerable<Stock> Stock)
+        void IAdminStockFunctions.UpdateStock(IEnumerable<StockDTO> Stock)
         {
             foreach (var stock in Stock)
             {
@@ -146,7 +128,7 @@ namespace Webshop.Data.Managers
             await _context.SaveChangesAsync();*/
         }
 
-        void UpdateStock(Stock stock)
+        void UpdateStock(StockDTO stock)
         {
             string command = "UPDATE Stock SET Quantity = @SQuantity, Description = @SDescription WHERE Id = @SId";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))

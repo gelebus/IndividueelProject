@@ -1,5 +1,4 @@
-﻿using ModelLib.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +8,8 @@ namespace Webshop.Interface
 {
     public interface IAdminStockFunctions
     {
-        Stock CreateStock(Stock stock);
-        void UpdateStock(IEnumerable<Stock> stock);
+        StockDTO CreateStock(StockDTO stock);
+        void UpdateStock(IEnumerable<StockDTO> stock);
         IEnumerable<StockResponse> GetStock();
         void RemoveStock(int id);
 
@@ -18,7 +17,7 @@ namespace Webshop.Interface
         {
             public int Id { get; set; }
             public string Description { get; set; }
-            public IEnumerable<Stock> Stock { get; set; }
+            public IEnumerable<StockDTO> Stock { get; set; }
         }
     }
 }

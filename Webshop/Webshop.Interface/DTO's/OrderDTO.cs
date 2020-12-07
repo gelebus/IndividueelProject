@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ModelLib.Models
+namespace Webshop.Interface
 {
-    public class Order
+    public class OrderDTO
     {
         public int Id { get; set; }
         public string OrderReference { get; set; }
@@ -13,6 +13,6 @@ namespace ModelLib.Models
         public string Postcode { get; set; }
         public string City { get; set; }
 
-        public List<OrderProduct> OrderProducts { get; set; }
+        public List<OrderProductDTO> OrderProducts { get; set; }
     }
 }

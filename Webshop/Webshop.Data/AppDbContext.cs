@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ModelLib.Models;
+using Webshop.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Webshop.ModelLib.Models;
+
 
 namespace Webshop.Data
 {
@@ -15,15 +15,15 @@ namespace Webshop.Data
 
         }
         //dependency injection
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Stock> Stock { get; set; }
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<ProductDTO> Products { get; set; }
+        public DbSet<OrderDTO> Orders { get; set; }
+        public DbSet<StockDTO> Stock { get; set; }
+        public DbSet<OrderProductDTO> OrderProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<OrderProduct>().HasKey(a => new { a.ProductId, a.OrderId });
+            builder.Entity<OrderProductDTO>().HasKey(a => new { a.ProductId, a.OrderId });
         }
     }
 }
