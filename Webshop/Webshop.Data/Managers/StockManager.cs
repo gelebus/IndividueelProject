@@ -57,7 +57,7 @@ namespace Webshop.Data.Managers
         {
             var stock = new List<IAdminStockFunctions.StockResponse>();
             string command = "SELECT Id, Description FROM [Products]";
-            string command2 = "SELECT Quantity, Description FROM [Stock] WHERE ProductId = @PId";
+            string command2 = "SELECT Quantity, Description, Id FROM [Stock] WHERE ProductId = @PId";
 
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
             {
@@ -89,7 +89,8 @@ namespace Webshop.Data.Managers
                             {
                                 ProductId = s.Id,
                                 Quantity = reader.GetInt32(0),
-                                Description = reader.GetString(1)
+                                Description = reader.GetString(1),
+                                Id = reader.GetInt32(2)
                             });
                         }
                         s.Stock = stocks;
