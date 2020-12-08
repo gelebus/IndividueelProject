@@ -56,7 +56,7 @@ namespace Webshop.Data.Managers
         IEnumerable<IAdminStockFunctions.StockResponse> IAdminStockFunctions.GetStock()
         {
             var stock = new List<IAdminStockFunctions.StockResponse>();
-            string command = "SELECT Id, Description FROM [Products]";
+            string command = "SELECT Id, Description, Name FROM [Products]";
             string command2 = "SELECT Quantity, Description, Id FROM [Stock] WHERE ProductId = @PId";
 
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
@@ -71,7 +71,8 @@ namespace Webshop.Data.Managers
                         stock.Add(new IAdminStockFunctions.StockResponse()
                         {
                             Id = reader.GetInt32(0),
-                            Description = reader.GetString(1)
+                            Description = reader.GetString(1),
+                            Name = reader.GetString(2)
                         });
                     }
                     reader.Close();

@@ -16,6 +16,7 @@ namespace Webshop.Interface
         public class StockResponse
         {
             public int Id { get; set; }
+            public string Name { get; set; }
             public string Description { get; set; }
             public IEnumerable<StockDTO> Stock { get; set; }
         }

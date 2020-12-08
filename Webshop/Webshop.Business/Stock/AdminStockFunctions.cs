@@ -78,6 +78,7 @@ namespace Webshop.Logic.Stock
                 productvms.Add(new AdminProductViewModel()
                 {
                     Id = stock.Id,
+                    Name = stock.Name,
                     Description = stock.Description,
                     Stock = stockvms
                 });

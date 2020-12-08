@@ -32,15 +32,30 @@
             this.currentStock.productId = Number(product.id);
         },
         updateStock() {
-
+            this.loading = true;
+            axios.put('/Admin/stocks', {
+                stock: this.currentSelectedProduct.stock.map(x => {
+                    return {
+                        stockId: Number(x.stockId),
+                        description: x.description,
+                        productId: Number(this.currentSelectedProduct.id),
+                        quantity: Number(x.quantity)
+                    }
+                })
+            })
+            .then(result => { console.log(result); })
+            .catch(error => { console.log(error); })
+            .then(() => { this.loading = false; });
         },
         removeStock(id, index) {
+            this.loading = true;
             axios.delete('/Admin/stocks/' + id)
                 .then(result => { console.log(result); this.currentSelectedProduct.stock.splice(index, 1) })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false; });
         },
         createStock() {
+            this.loading = true;
             axios.post('/Admin/stocks',this.currentStock)
                 .then(result => { console.log(result); this.currentSelectedProduct.stock = [...this.currentSelectedProduct.stock, result.data]; })
                 .catch(error => { console.log(error); })
