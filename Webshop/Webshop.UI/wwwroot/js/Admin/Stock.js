@@ -42,7 +42,7 @@
         },
         createStock() {
             axios.post('/Admin/stocks',this.currentStock)
-                .then(result => { console.log(result); this.currentSelectedProduct.Stock = [...this.currentSelectedProduct.Stock, result.data]; })
+                .then(result => { console.log(result); this.currentSelectedProduct.stock = [...this.currentSelectedProduct.stock, result.data]; })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false; });
         }
