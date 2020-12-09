@@ -11,9 +11,11 @@ namespace Webshop.Logic.Stock
 {
     public class StockFunctions
     {
+        private AppDbContext _context;
         IAdminStockFunctions IAdminStockFunctions;
         public StockFunctions(AppDbContext context)
         {
+            _context = context;
             IAdminStockFunctions = new StockManager(context);
         }
 
@@ -43,18 +45,17 @@ namespace Webshop.Logic.Stock
         public IEnumerable<StockDTO> RunUpdateStock(IEnumerable<StockViewModel> stockVms)
         {
             List<StockDTO> stock = new List<StockDTO>();
-
             foreach (StockViewModel stockViewModel in stockVms)
             {
-                stock.Add(new StockDTO() 
-                { 
+                new Stock(stockViewModel, _context).RunUpdate();
+                stock.Add(new StockDTO()
+                {
                     Id = stockViewModel.Id,
                     ProductId = stockViewModel.ProductId,
                     Quantity = stockViewModel.Quantity,
                     Description = stockViewModel.Description
                 });
             }
-            IAdminStockFunctions.UpdateStock(stock); 
             return stock;
         }
         public IEnumerable<AdminProductViewModel> RunGetStock()

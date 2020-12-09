@@ -9,7 +9,7 @@ using Webshop.Interface;
 
 namespace Webshop.Data.Managers
 {
-    public class StockManager : IAdminStockFunctions
+    public class StockManager : IAdminStockFunctions, IStock
     {
         readonly string connectionstring;
 
@@ -120,17 +120,8 @@ namespace Webshop.Data.Managers
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();*/
         }
-        void IAdminStockFunctions.UpdateStock(IEnumerable<StockDTO> Stock)
-        {
-            foreach (var stock in Stock)
-            {
-                UpdateStock(stock);
-            }
-            /*_context.UpdateRange(stock);
-            await _context.SaveChangesAsync();*/
-        }
 
-        void UpdateStock(StockDTO stock)
+        void IStock.UpdateStock(StockDTO stock)
         {
             string command = "UPDATE Stock SET Quantity = @SQuantity, Description = @SDescription WHERE Id = @SId";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))

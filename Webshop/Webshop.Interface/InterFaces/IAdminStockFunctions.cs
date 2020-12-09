@@ -9,7 +9,6 @@ namespace Webshop.Interface
     public interface IAdminStockFunctions
     {
         StockDTO CreateStock(StockDTO stock);
-        void UpdateStock(IEnumerable<StockDTO> stock);
         IEnumerable<StockResponse> GetStock();
         void RemoveStock(int id);
 
