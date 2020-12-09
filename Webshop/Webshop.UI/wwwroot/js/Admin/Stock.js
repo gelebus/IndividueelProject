@@ -33,16 +33,15 @@
         },
         updateStock() {
             this.loading = true;
-            axios.put('/Admin/stocks', {
-                stock: this.currentSelectedProduct.stock.map(x => {
+            var vm = this.currentSelectedProduct.stock.map(x => {
                     return {
-                        stockId: Number(x.stockId),
-                        description: x.description,
+                        id: Number(x.id),
                         productId: Number(this.currentSelectedProduct.id),
-                        quantity: Number(x.quantity)
+                        quantity: Number(x.quantity),
+                        description: x.description
                     }
-                })
             })
+            axios.put('/Admin/stocks', vm)
             .then(result => { console.log(result); })
             .catch(error => { console.log(error); })
             .then(() => { this.loading = false; });

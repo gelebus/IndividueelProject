@@ -29,7 +29,7 @@ namespace Webshop.Logic.Stock
 
             return new StockViewModel() 
             { 
-                StockId = stock.Id,
+                Id = stock.Id,
                 ProductId = stock.ProductId,
                 Quantity = stock.Quantity,
                 Description = stock.Description
@@ -48,7 +48,7 @@ namespace Webshop.Logic.Stock
             {
                 stock.Add(new StockDTO() 
                 { 
-                    Id = stockViewModel.StockId,
+                    Id = stockViewModel.Id,
                     ProductId = stockViewModel.ProductId,
                     Quantity = stockViewModel.Quantity,
                     Description = stockViewModel.Description
@@ -70,7 +70,7 @@ namespace Webshop.Logic.Stock
                     stockvms.Add(new StockViewModel()
                     {
                         ProductId = s.ProductId,
-                        StockId = s.Id,
+                        Id = s.Id,
                         Description = s.Description,
                         Quantity = s.Quantity
                     });

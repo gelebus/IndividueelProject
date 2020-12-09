@@ -77,8 +77,5 @@ namespace Webshop.UI.Controllers
         {
             return Ok(new AdminStockFunctions(_context).RunUpdateStock(stockViewModels));
         }
-
-
-
     }
 }

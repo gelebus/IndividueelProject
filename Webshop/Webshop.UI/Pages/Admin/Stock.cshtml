@@ -27,7 +27,7 @@
                             <tr v-for="(stock, index) in currentSelectedProduct.stock">
                                 <td><input v-model="stock.description" style="width:70%" /></td>
                                 <td><input v-model.number="stock.quantity" style="width:70%" /></td>
-                                <td><a v-on:click="removeStock(stock.stockId,index) " style="color:red;">Remove</a></td>
+                                <td><a v-on:click="removeStock(stock.id,index) " style="color:red;">Remove</a></td>
                             </tr>
                         </table>
                         <a class="btn" v-on:click="updateStock" style="color:cornflowerblue;">update products</a>
