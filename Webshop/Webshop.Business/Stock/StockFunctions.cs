@@ -9,10 +9,10 @@ using Webshop.Logic.ViewModels;
 
 namespace Webshop.Logic.Stock
 {
-    public class AdminStockFunctions
+    public class StockFunctions
     {
         IAdminStockFunctions IAdminStockFunctions;
-        public AdminStockFunctions(AppDbContext context)
+        public StockFunctions(AppDbContext context)
         {
             IAdminStockFunctions = new StockManager(context);
         }

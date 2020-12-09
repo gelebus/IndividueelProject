@@ -9,7 +9,7 @@ using Webshop.Interface;
 
 namespace Webshop.Data
 {
-    public class ProductManager : IAdminProductFunctions, IUserProductFunctions
+    public class ProductManager : IAdminProductFunctions, IUserProductFunctions, IProduct
     {
         
         private string connectionstring;
@@ -52,7 +52,7 @@ namespace Webshop.Data
             }
             return Product;
         }
-        ProductDTO IAdminProductFunctions.UpdateProduct(ProductDTO request)
+        ProductDTO IProduct.UpdateProduct(ProductDTO request)
         {
             ProductDTO newProduct = request;
             string command = "UPDATE [Products] SET Value = @PValue,Name = @PName,Description = @PDescription WHERE Id = @PId";
