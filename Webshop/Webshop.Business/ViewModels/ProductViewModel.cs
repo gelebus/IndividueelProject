@@ -9,5 +9,7 @@ namespace Webshop.Logic.ViewModels
         public string Value { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public IEnumerable<StockViewModel> Stock { get; set; }
+        public bool InStock { get; set; }
     }
 }

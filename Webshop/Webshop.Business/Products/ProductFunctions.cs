@@ -54,6 +54,39 @@ namespace Webshop.Logic.Products
                 Value = product.Value
             };
         }
+        public ProductViewModel RunGetUserProduct(string name)
+        {
+            ProductDTO product = iUserProductFunctions.GetProduct(name);
+            if(product == null)
+            {
+                return null;
+            }
+            bool inStock = false;
+            if(product.Stock.Count > 0)
+            {
+                foreach(var s in product.Stock)
+                {
+                    if(s.InStock)
+                    {
+                        inStock = true;
+                    }
+                }
+            }
+            return new ProductViewModel()
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Value = $"€{product.Value.ToString("N2")}",
+                InStock = inStock,
+                Stock = product.Stock.Select(a => new StockViewModel 
+                {
+                    Id = a.Id,
+                    ProductId = a.ProductId,
+                    Quantity = a.Quantity,
+                    Description = a.Description
+                })
+            };
+        }
         public IEnumerable<AdminProductViewModel> RunGetProducts()
         {
             List<AdminProductViewModel> productVms = new List<AdminProductViewModel>();

@@ -7,5 +7,6 @@ namespace Webshop.Interface
     public interface IUserProductFunctions
     {
         IEnumerable<ProductDTO> GetProducts();
+        ProductDTO GetProduct(string name);
     }
 }

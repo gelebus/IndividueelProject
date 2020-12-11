@@ -86,6 +86,71 @@ namespace Webshop.Data
                 }
             }
         }
+        ProductDTO IUserProductFunctions.GetProduct(string name)
+        {
+            ProductDTO product = GetProductWithName(name);
+            if(product == null)
+            {
+                return null;
+            }
+            string command = "SELECT Id, Description, Quantity FROM [Stock] WHERE ProductId = @Id";
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+                    cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = product.Id;
+
+                    var reader = cmd.ExecuteReader();
+                    product.Stock = new List<StockDTO>();
+                    while (reader.Read())
+                    {
+                        product.Stock.Add(new StockDTO()
+                        {
+                            Id = reader.GetInt32(0),
+                            Description = reader.GetString(1),
+                            Quantity = reader.GetInt32(2),
+                        });
+                        if(product.Stock[product.Stock.Count - 1].Quantity > 0)
+                        {
+                            product.Stock[product.Stock.Count - 1].InStock = true;
+                        }
+                    }
+                }
+            }
+            return product;
+        }
+        ProductDTO GetProductWithName(string name)
+        {
+            ProductDTO Product = new ProductDTO();
+            string command = "SELECT * FROM [Products] WHERE Name = @Name";
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+                    cmd.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar).Value = name;
+
+                    var reader = cmd.ExecuteReader();
+
+                    while(reader.Read())
+                    {
+                        Product = new ProductDTO()
+                        {
+                            Id = reader.GetInt32(0),
+                            Value = reader.GetDecimal(1),
+                            Name = reader.GetString(2),
+                            Description = reader.GetString(3)
+                        };
+                    }
+                }
+            }
+            if(Product.Name == null)
+            {
+                return null;
+            }
+            return Product;
+        }
         ProductDTO IAdminProductFunctions.GetProduct(int id)
         {
             ProductDTO Product = new ProductDTO();
