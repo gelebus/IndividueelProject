@@ -8,12 +8,17 @@
     <p>@Model.Product.Description</p>
     <p>@Model.Product.Value</p>
     <div>
-        <label>stock</label>
-        <select>
-            @foreach (var s in Model.Product.Stock)
-             {
-                <option value="@s.Id">@s.Description</option>
-             }
-        </select>
+        <form method="post">
+            <label>stock</label>
+            <select asp-for="CartProduct.StockId">
+                @foreach (var s in Model.Product.Stock)
+                {
+                    <option value="@s.Id">@s.Description</option>
+                }
+            </select>
+            <label style="font-weight:bold">Quantity:</label>
+            <input asp-for="CartProduct.Quantity" />
+            <button type="submit">submit</button>
+        </form>
     </div>
 </div>

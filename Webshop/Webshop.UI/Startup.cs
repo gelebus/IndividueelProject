@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Design;
 using Webshop.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace Webshop.UI
 {
@@ -27,10 +28,19 @@ namespace Webshop.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             services.AddRazorPages();
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddSession(options => {
+                options.Cookie.Name = "ShoppingCart";
+                options.Cookie.MaxAge = TimeSpan.FromDays(7);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +59,9 @@ namespace Webshop.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             app.UseRouting();
+            app.UseSession();
             app.UseMvc();
 
             app.UseAuthorization();
