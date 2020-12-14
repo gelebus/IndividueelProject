@@ -18,7 +18,7 @@ namespace Webshop.UI.Pages
             _context = context;
         }
 
-        public CartProductViewModel Cart { get; set; }
+        public IEnumerable<CartProductViewModel> Cart { get; set; }
         public IActionResult OnGet()
         {
             Cart = new ShoppingCart(HttpContext.Session,_context).GetShoppingCart();
