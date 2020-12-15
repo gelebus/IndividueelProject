@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Webshop.Data\Webshop.Data.csproj" />
+    <ProjectReference Include="..\Webshop.Interface\Webshop.Interface.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,41 +15,41 @@ namespace Webshop.UI.Controllers
     [Route("[controller]")]
     public class AdminController : Controller
     {
-        private AppDbContext _context;
+        private readonly string ConString;
 
         public AdminController(AppDbContext context)
         {
-            _context = context;
+            ConString = context.Database.GetDbConnection().ConnectionString;
         }
 
         [HttpPost("products")]
         public IActionResult CreateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(new ProductFunctions(_context).RunCreateProduct(productViewModel));
+            return Ok(new ProductFunctions(ConString).RunCreateProduct(productViewModel));
         }
 
         [HttpGet("products/{id}")]
         public IActionResult GetProduct(int id)
         {
-            return Ok(new ProductFunctions(_context).RunGetProduct(id));
+            return Ok(new ProductFunctions(ConString).RunGetProduct(id));
         }
 
         [HttpGet("products")]
         public IActionResult GetProducts()
         {
-            return Ok(new ProductFunctions(_context).RunGetProducts());
+            return Ok(new ProductFunctions(ConString).RunGetProducts());
         }
 
         [HttpDelete("products/{id}")]
         public IActionResult RemoveProduct(int id)
         {
-            return Ok(new ProductFunctions(_context).RunRemoveProduct(id));
+            return Ok(new ProductFunctions(ConString).RunRemoveProduct(id));
         }
 
         [HttpPut("products")]
         public IActionResult UpdateProduct([FromBody] AdminProductViewModel productViewModel)
         {
-            return Ok(new ProductFunctions(_context).RunUpdateProduct(productViewModel));
+            return Ok(new ProductFunctions(ConString).RunUpdateProduct(productViewModel));
         }
 
 
@@ -57,25 +58,25 @@ namespace Webshop.UI.Controllers
         [HttpPost("stocks")]
         public IActionResult CreateStock([FromBody] StockViewModel stockViewModel)
         {
-            return Ok(new StockFunctions(_context).RunCreateStock(stockViewModel));
+            return Ok(new StockFunctions(ConString).RunCreateStock(stockViewModel));
         }
 
         [HttpGet("stocks")]
         public IActionResult GetStock()
         {
-            return Ok(new StockFunctions(_context).RunGetStock());
+            return Ok(new StockFunctions(ConString).RunGetStock());
         }
 
         [HttpDelete("stocks/{id}")]
         public IActionResult RemoveStock(int id)
         {
-            return Ok(new StockFunctions(_context).RunRemoveStock(id));
+            return Ok(new StockFunctions(ConString).RunRemoveStock(id));
         }
 
         [HttpPut("stocks")]
         public IActionResult UpdateStock([FromBody] IEnumerable<StockViewModel> stockViewModels)
         {
-            return Ok(new StockFunctions(_context).RunUpdateStock(stockViewModels));
+            return Ok(new StockFunctions(ConString).RunUpdateStock(stockViewModels));
         }
     }
 }

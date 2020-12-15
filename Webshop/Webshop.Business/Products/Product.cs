@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 using System.Text;
-using Webshop.Data;
+using Webshop.Factory;
 using Webshop.Interface;
 using Webshop.Logic.ViewModels;
 
@@ -24,7 +24,7 @@ namespace Webshop.Logic
             Name = vm.Name;
             Description = vm.Description;
             Stock = vm.Stock;
-            adminProductFunctions = new ProductManager(conString);
+            adminProductFunctions = Factory.Factory.CreateIProduct(conString);
         }
 
         public ProductDTO RunUpdate()

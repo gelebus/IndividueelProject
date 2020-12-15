@@ -16,10 +16,10 @@ namespace Webshop.Logic
         private ISession _session;
         private IShoppingCart IShoppingCart;
 
-        public ShoppingCart(ISession session, AppDbContext context)
+        public ShoppingCart(ISession session, string conString)
         {
             _session = session;
-            IShoppingCart = new ShoppingCartManager(context.Database.GetDbConnection().ConnectionString);
+            IShoppingCart = Factory.Factory.CreateIShoppingCart(conString);
         }
 
         public void AddToShoppingCart(CartProductViewModel product)

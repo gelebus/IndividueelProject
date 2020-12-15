@@ -22,7 +22,7 @@ namespace Webshop.Logic.Stock
             Quantity = vm.Quantity;
             Description = vm.Description;
             ProductId = vm.ProductId;
-            Istock = new StockManager(conString);
+            Istock = Factory.Factory.CreateIStock(conString);
         }
 
         public void RunUpdate()

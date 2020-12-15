@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Webshop.Data;
 using Webshop.Logic;
 using Webshop.Logic.Products;
@@ -14,11 +15,11 @@ namespace Webshop.UI.Pages
 {
     public class ProductModel : PageModel
     {
-        private AppDbContext _context;
+        private readonly string ConString;
 
         public ProductModel(AppDbContext context)
         {
-            _context = context;
+            ConString = context.Database.GetDbConnection().ConnectionString;
         }
 
         [BindProperty]
@@ -28,7 +29,7 @@ namespace Webshop.UI.Pages
         public ProductViewModel Product { get; set; }
         public IActionResult OnGet(string name)
         {
-            Product = new ProductFunctions(_context).RunGetUserProduct(name.Replace("-", " "));
+            Product = new ProductFunctions(ConString).RunGetUserProduct(name.Replace("-", " "));
             if(Product == null)
             {
                 return RedirectToPage("Index");
@@ -41,7 +42,7 @@ namespace Webshop.UI.Pages
 
         public IActionResult OnPost()
         {
-            new ShoppingCart(HttpContext.Session, _context).AddToShoppingCart(CartProduct);
+            new ShoppingCart(HttpContext.Session, ConString).AddToShoppingCart(CartProduct);
             
 
             return RedirectToPage("ShoppingCart");

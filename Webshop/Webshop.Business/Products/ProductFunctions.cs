@@ -4,24 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Webshop.Data;
 using Webshop.Interface;
 using Webshop.Logic.ViewModels;
+using Webshop.Factory;
 
 
 namespace Webshop.Logic.Products
 {
     public class ProductFunctions
     {
-        private readonly string conString;
+        private readonly string ConString;
         private IAdminProductFunctions iAdminProductFunctions;
         private IUserProductFunctions iUserProductFunctions;
 
-        public ProductFunctions(AppDbContext context)
+        public ProductFunctions(string conString)
         {
-            conString = context.Database.GetDbConnection().ConnectionString;
-            iAdminProductFunctions = new ProductManager(conString);
-            iUserProductFunctions = new ProductManager(conString);
+            ConString = conString;
+            iAdminProductFunctions = Factory.Factory.CreateIAdminProductFunctions(ConString);
+            iUserProductFunctions = Factory.Factory.CreateIUserProductFunctions(ConString);
         }
 
         public AdminProductViewModel RunCreateProduct(ProductViewModel productViewModel)
@@ -129,7 +129,7 @@ namespace Webshop.Logic.Products
         }
         public AdminProductViewModel RunUpdateProduct(AdminProductViewModel productViewModel)
         {
-            ProductDTO response = new Product(productViewModel, conString).RunUpdate();
+            ProductDTO response = new Product(productViewModel, ConString).RunUpdate();
             AdminProductViewModel responseVm = new AdminProductViewModel()
             {
                 Id = response.Id,

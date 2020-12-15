@@ -14,9 +14,9 @@ namespace Webshop.Logic.Stock
     {
         private readonly string ConString;
         IStockFunctions IAdminStockFunctions;
-        public StockFunctions(AppDbContext context)
+        public StockFunctions(string conString)
         {
-            ConString = context.Database.GetDbConnection().ConnectionString;
+            ConString = conString;
             IAdminStockFunctions = new StockManager(ConString);
         }
 
