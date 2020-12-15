@@ -12,7 +12,7 @@ namespace Webshop.Logic.Stock
     public class StockFunctions
     {
         private AppDbContext _context;
-        IAdminStockFunctions IAdminStockFunctions;
+        IStockFunctions IAdminStockFunctions;
         public StockFunctions(AppDbContext context)
         {
             _context = context;

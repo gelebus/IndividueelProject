@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webshop.Interface
 {
-    public interface IAdminStockFunctions
+    public interface IStockFunctions
     {
         StockDTO CreateStock(StockDTO stock);
         IEnumerable<StockResponse> GetStock();

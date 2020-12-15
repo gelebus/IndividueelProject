@@ -9,7 +9,7 @@ using Webshop.Interface;
 
 namespace Webshop.Data.Managers
 {
-    public class StockManager : IAdminStockFunctions, IStock
+    public class StockManager : IStockFunctions, IStock
     {
         readonly string connectionstring;
 
@@ -17,7 +17,7 @@ namespace Webshop.Data.Managers
         {
             connectionstring = context.Database.GetDbConnection().ConnectionString;
         }
-        StockDTO IAdminStockFunctions.CreateStock(StockDTO stock)
+        StockDTO IStockFunctions.CreateStock(StockDTO stock)
         {
             StockDTO newStock = stock;
             string command1 = "INSERT INTO Stock (Quantity,Description,ProductId) VALUES(@SQuantity,@SDesc,@SProductId)";
@@ -53,9 +53,9 @@ namespace Webshop.Data.Managers
             //_context.Stock.Add(stock);
             //await _context.SaveChangesAsync();
         }
-        IEnumerable<IAdminStockFunctions.StockResponse> IAdminStockFunctions.GetStock()
+        IEnumerable<IStockFunctions.StockResponse> IStockFunctions.GetStock()
         {
-            var stock = new List<IAdminStockFunctions.StockResponse>();
+            var stock = new List<IStockFunctions.StockResponse>();
             string command = "SELECT Id, Description, Name FROM [Products]";
             string command2 = "SELECT Quantity, Description, Id FROM [Stock] WHERE ProductId = @PId";
 
@@ -68,7 +68,7 @@ namespace Webshop.Data.Managers
 
                     while(reader.Read())
                     {
-                        stock.Add(new IAdminStockFunctions.StockResponse()
+                        stock.Add(new IStockFunctions.StockResponse()
                         {
                             Id = reader.GetInt32(0),
                             Description = reader.GetString(1),
@@ -102,7 +102,7 @@ namespace Webshop.Data.Managers
             }
             return stock;
         }
-        void IAdminStockFunctions.RemoveStock(int id)
+        void IStockFunctions.RemoveStock(int id)
         {
             string command = "DELETE FROM [Stock] WHERE Id = @SId";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
