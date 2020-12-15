@@ -35,7 +35,7 @@ namespace Webshop.UI
             });
             services.AddRazorPages();
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration["ConnectionString"])); //dependency injection factory
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddSession(options => {
                 options.Cookie.Name = "ShoppingCart";

@@ -14,7 +14,6 @@ namespace Webshop.Data
         {
 
         }
-        //dependency injection
         public DbSet<ProductDTO> Products { get; set; }
         public DbSet<OrderDTO> Orders { get; set; }
         public DbSet<StockDTO> Stock { get; set; }

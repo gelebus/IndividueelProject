@@ -50,8 +50,6 @@ namespace Webshop.Data.Managers
                 }
             }
             return newStock;
-            //_context.Stock.Add(stock);
-            //await _context.SaveChangesAsync();
         }
         IEnumerable<IStockFunctions.StockResponse> IStockFunctions.GetStock()
         {
@@ -115,10 +113,6 @@ namespace Webshop.Data.Managers
                     cmd.ExecuteNonQuery();
                 }
             }
-
-            /*var stock = _context.Stock.FirstOrDefault(a => a.Id == id);
-            _context.Stock.Remove(stock);
-            await _context.SaveChangesAsync();*/
         }
 
         void IStock.UpdateStock(StockDTO stock)
