@@ -7,6 +7,7 @@ using Webshop.Interface;
 using Webshop.Data.Managers;
 using Webshop.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Webshop.Logic
 {
@@ -18,7 +19,7 @@ namespace Webshop.Logic
         public ShoppingCart(ISession session, AppDbContext context)
         {
             _session = session;
-            IShoppingCart = new ShoppingCartManager(context);
+            IShoppingCart = new ShoppingCartManager(context.Database.GetDbConnection().ConnectionString);
         }
 
         public void AddToShoppingCart(CartProductViewModel product)

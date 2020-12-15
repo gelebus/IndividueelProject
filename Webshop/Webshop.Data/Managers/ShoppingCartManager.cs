@@ -11,9 +11,9 @@ namespace Webshop.Data.Managers
     {
         private string connectionstring;
 
-        public ShoppingCartManager(AppDbContext context)
+        public ShoppingCartManager(string conString)
         {
-            connectionstring = context.Database.GetDbConnection().ConnectionString;
+            connectionstring = conString;
         }
 
         CartProductDTO IShoppingCart.GetCart(int stockId)

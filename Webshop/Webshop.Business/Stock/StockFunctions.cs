@@ -6,17 +6,18 @@ using Webshop.Data;
 using Webshop.Interface;
 using Webshop.Data.Managers;
 using Webshop.Logic.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Webshop.Logic.Stock
 {
     public class StockFunctions
     {
-        private AppDbContext _context;
+        private readonly string ConString;
         IStockFunctions IAdminStockFunctions;
         public StockFunctions(AppDbContext context)
         {
-            _context = context;
-            IAdminStockFunctions = new StockManager(context);
+            ConString = context.Database.GetDbConnection().ConnectionString;
+            IAdminStockFunctions = new StockManager(ConString);
         }
 
         public StockViewModel RunCreateStock(StockViewModel request)
@@ -47,7 +48,7 @@ namespace Webshop.Logic.Stock
             List<StockDTO> stock = new List<StockDTO>();
             foreach (StockViewModel stockViewModel in stockVms)
             {
-                new Stock(stockViewModel, _context).RunUpdate();
+                new Stock(stockViewModel, ConString).RunUpdate();
                 stock.Add(new StockDTO()
                 {
                     Id = stockViewModel.Id,

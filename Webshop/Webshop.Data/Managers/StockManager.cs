@@ -11,11 +11,11 @@ namespace Webshop.Data.Managers
 {
     public class StockManager : IStockFunctions, IStock
     {
-        readonly string connectionstring;
+        private readonly string connectionstring;
 
-        public StockManager(AppDbContext context)
+        public StockManager(string conString)
         {
-            connectionstring = context.Database.GetDbConnection().ConnectionString;
+            connectionstring = conString;
         }
         StockDTO IStockFunctions.CreateStock(StockDTO stock)
         {

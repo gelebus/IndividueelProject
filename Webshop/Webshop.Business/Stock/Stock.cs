@@ -16,13 +16,13 @@ namespace Webshop.Logic.Stock
         private int ProductId;
         private IStock Istock;
 
-        public Stock(StockViewModel vm, AppDbContext context)
+        public Stock(StockViewModel vm, string conString)
         {
             Id = vm.Id;
             Quantity = vm.Quantity;
             Description = vm.Description;
             ProductId = vm.ProductId;
-            Istock = new StockManager(context);
+            Istock = new StockManager(conString);
         }
 
         public void RunUpdate()

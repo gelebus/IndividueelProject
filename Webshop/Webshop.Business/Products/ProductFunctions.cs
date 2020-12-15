@@ -13,15 +13,15 @@ namespace Webshop.Logic.Products
 {
     public class ProductFunctions
     {
-        private AppDbContext _context;
+        private readonly string conString;
         private IAdminProductFunctions iAdminProductFunctions;
         private IUserProductFunctions iUserProductFunctions;
 
         public ProductFunctions(AppDbContext context)
         {
-            _context = context;
-            iAdminProductFunctions = new ProductManager(context);
-            iUserProductFunctions = new ProductManager(context);
+            conString = context.Database.GetDbConnection().ConnectionString;
+            iAdminProductFunctions = new ProductManager(conString);
+            iUserProductFunctions = new ProductManager(conString);
         }
 
         public AdminProductViewModel RunCreateProduct(ProductViewModel productViewModel)
@@ -129,7 +129,7 @@ namespace Webshop.Logic.Products
         }
         public AdminProductViewModel RunUpdateProduct(AdminProductViewModel productViewModel)
         {
-            ProductDTO response = new Product(productViewModel, _context).RunUpdate();
+            ProductDTO response = new Product(productViewModel, conString).RunUpdate();
             AdminProductViewModel responseVm = new AdminProductViewModel()
             {
                 Id = response.Id,

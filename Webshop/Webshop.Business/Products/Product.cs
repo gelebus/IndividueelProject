@@ -17,14 +17,14 @@ namespace Webshop.Logic
         private IEnumerable<StockViewModel> Stock;
         IProduct adminProductFunctions;
 
-        public Product(AdminProductViewModel vm, AppDbContext context)
+        public Product(AdminProductViewModel vm, string conString)
         {
             Id = vm.Id;
             Value = vm.Value;
             Name = vm.Name;
             Description = vm.Description;
             Stock = vm.Stock;
-            adminProductFunctions = new ProductManager(context);
+            adminProductFunctions = new ProductManager(conString);
         }
 
         public ProductDTO RunUpdate()

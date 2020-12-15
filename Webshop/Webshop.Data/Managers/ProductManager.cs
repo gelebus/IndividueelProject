@@ -14,9 +14,9 @@ namespace Webshop.Data
         
         private string connectionstring;
 
-        public ProductManager(AppDbContext context)
+        public ProductManager(string conString)
         {
-            connectionstring = context.Database.GetDbConnection().ConnectionString;
+            connectionstring = conString;
         }
         ProductDTO IAdminProductFunctions.CreateProduct(ProductDTO product)
         {
