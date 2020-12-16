@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Webshop.Interface;
 
-namespace Webshop.Data
+namespace Webshop.Data.Managers
 {
     public class ProductManager : IAdminProductFunctions, IUserProductFunctions, IProduct
     {

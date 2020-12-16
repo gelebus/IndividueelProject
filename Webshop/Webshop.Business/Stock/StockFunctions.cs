@@ -17,7 +17,7 @@ namespace Webshop.Logic.Stock
         public StockFunctions(string conString)
         {
             ConString = conString;
-            IAdminStockFunctions = new StockManager(ConString);
+            IAdminStockFunctions = Factory.Factory.CreateIStockFunctions(ConString);
         }
 
         public StockViewModel RunCreateStock(StockViewModel request)
