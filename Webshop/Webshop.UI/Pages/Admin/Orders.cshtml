@@ -14,6 +14,49 @@
         </div>
         <div class="col-sm-9">
             <h2>Orders</h2>
+            <div style="overflow: scroll; height: 600px; width:900px; overflow-x:hidden">
+                <table style="width:100%">
+                    @foreach (var order in Model.Orders)
+                    {
+                        <tr style="border-bottom: 1px solid #000;">
+                            <td style="min-width:80px">
+                                <label style="font-weight:bold">OrderId</label>
+                                <p>@order.Id</p>
+                            </td>
+                            <td style="min-width:80px">
+                                <label style="font-weight:bold">City</label>
+                                <p>@order.City</p>
+                            </td>
+                            <td style="min-width:80px">
+                                <label style="font-weight:bold">Postcode</label>
+                                <p>@order.Postcode</p>
+                            </td>
+                            <td>
+                                <label style="font-weight:bold">Email</label>
+                                <p>@order.Adress</p>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 2px solid #000;">
+
+                            @foreach (var cartItem in order.products)
+                            {
+                                <td style="border-right: 1px solid #000;">
+                                    <label style="font-weight:bold">Product</label>
+                                    <p>@cartItem.Name</p>
+                                    <label style="font-weight:bold">Value</label>
+                                    <p>@cartItem.Value</p>
+                                    <label style="font-weight:bold">Quantity</label>
+                                    <p>@cartItem.Quantity</p>
+                                    <label style="font-weight:bold">StockId</label>
+                                    <p>@cartItem.StockId</p>
+                                </td>
+                            }
+
+                        </tr>
+
+                    }
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -4,17 +4,25 @@
 }
 
 <div>
-    @foreach (var cartItem in Model.Cart)
+    <div style="overflow: scroll; max-height: 600px; min-height:400px; overflow-x:hidden">
+        @foreach (var cartItem in Model.Cart)
+        {
+            <label style="font-weight:bold">Product</label>
+            <p>@cartItem.Name</p>
+            <label style="font-weight:bold">Value</label>
+            <p>@cartItem.Value</p>
+            <label style="font-weight:bold">Quantity</label>
+            <p>@cartItem.Quantity</p>
+            <label style="font-weight:bold">StockId</label>
+            <p>@cartItem.StockId</p>
+            <hr />
+        }
+    </div>
+    @if(Model.Cart.Count > 0)
     {
-        <label style="font-weight:bold">Product</label>
-        <p>@cartItem.Name</p>
-        <label style="font-weight:bold">Value</label>
-        <p>@cartItem.Value</p>
-        <label style="font-weight:bold">Quantity</label>
-        <p>@cartItem.Quantity</p>
-        <label style="font-weight:bold">StockId</label>
-        <p>@cartItem.StockId</p>
-        <hr />
+        <a asp-page="Order">Go to checkout</a>
     }
-
+    <br>
+    <a asp-page="Index">Return to shop</a>
 </div>
+

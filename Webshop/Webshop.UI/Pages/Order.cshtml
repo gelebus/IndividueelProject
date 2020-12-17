@@ -1,0 +1,28 @@
+﻿@page
+@model Webshop.UI.Pages.OrderModel
+@{
+}
+
+<form method="post">
+    <div>
+        <label>Email</label>
+        <input asp-for="Order.Adress" />
+        <span asp-validation-for="Order.Adress"></span>
+    </div>
+    <div>
+        <label>Postcode</label>
+        <input asp-for="Order.Postcode" />
+        <span asp-validation-for="Order.Postcode"></span>
+    </div>
+    <div>
+        <label>City</label>
+        <input asp-for="Order.City" />
+        <span asp-validation-for="Order.City"></span>
+    </div>
+    <div>
+        <label>Payment</label>
+        <input readonly value="paypal" />
+    </div>
+    <button type="submit">Order</button>
+</form>
+

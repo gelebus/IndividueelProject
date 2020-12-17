@@ -54,6 +54,18 @@ namespace Webshop.Logic.Products
                 Value = product.Value
             };
         }
+        public AdminProductViewModel RunGetProductByStockId(int stockId)
+        {
+            ProductDTO product = iAdminProductFunctions.GetProductByStockId(stockId);
+            return new AdminProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Value = product.Value
+            };
+        }
+
         public ProductViewModel RunGetUserProduct(string name)
         {
             ProductDTO product = iUserProductFunctions.GetProduct(name);

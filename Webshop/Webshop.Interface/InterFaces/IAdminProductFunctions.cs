@@ -10,6 +10,7 @@ namespace Webshop.Interface
         ProductDTO CreateProduct(ProductDTO product);
         void RemoveProduct(int id);
         ProductDTO GetProduct(int id);
+        ProductDTO GetProductByStockId(int stockId);
         IEnumerable<ProductDTO> GetProducts();
     }
 }

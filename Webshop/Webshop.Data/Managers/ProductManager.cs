@@ -178,6 +178,33 @@ namespace Webshop.Data.Managers
             }
             return Product;
         }
+        ProductDTO IAdminProductFunctions.GetProductByStockId(int stockId)
+        {
+            ProductDTO Product = new ProductDTO();
+            string command = "SELECT * FROM [Products] WHERE Id IN(SELECT ProductId FROM [Stock] WHERE Id = @SId)";
+            using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+                    cmd.Parameters.Add("@SId", System.Data.SqlDbType.Int).Value = stockId;
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Product = new ProductDTO()
+                        {
+                            Id = reader.GetInt32(0),
+                            Value = reader.GetDecimal(1),
+                            Name = reader.GetString(2),
+                            Description = reader.GetString(3)
+                        };
+                    }
+                }
+            }
+            return Product;
+        }
 
         IEnumerable<ProductDTO> IAdminProductFunctions.GetProducts()
         {

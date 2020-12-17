@@ -31,5 +31,10 @@ namespace Webshop.Factory
         {
             return new ShoppingCartManager(con);
         }
+
+        public static IOrderFunctions CreateIOrderFunctions(string con)
+        {
+            return new OrderManager(con);
+        }
     }
 }

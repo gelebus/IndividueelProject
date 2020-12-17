@@ -18,11 +18,16 @@ namespace Webshop.UI.Pages
         {
             conString = context.Database.GetDbConnection().ConnectionString;
         }
-
-        public IEnumerable<CartProductViewModel> Cart { get; set; }
+        public List<CartProductViewModel> Cart { get; set; }
         public IActionResult OnGet()
         {
-            Cart = new ShoppingCart(HttpContext.Session,conString).GetShoppingCart();
+            List<CartProductViewModel>cart = new List<CartProductViewModel>();
+            IEnumerable<CartProductViewModel> cartlist = new ShoppingCart(HttpContext.Session,conString).GetShoppingCart();
+            foreach(var cartproduct in cartlist)
+            {
+                cart.Add(cartproduct);
+            }
+            Cart = cart;
             return Page();
         }
     }
