@@ -9,6 +9,8 @@ using Webshop.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Webshop.Logic.Products;
+using Webshop.Logic.Stock;
+using Webshop.Logic.ViewModels;
 
 namespace Webshop.Logic
 {
@@ -27,10 +29,7 @@ namespace Webshop.Logic
 
         public void AddToShoppingCart(CartProductViewModel product)
         {
-            if(product.Quantity < 0)
-            {
-                product.Quantity = 0;
-            }
+            product = AdditionChecks(product);
 
             var cartlist = new List<CartProductViewModel>();
             var stringObject = _session.GetString("shoppingCart");
@@ -83,6 +82,26 @@ namespace Webshop.Logic
         {
             string stringObject = JsonConvert.SerializeObject(new List<CartProductViewModel>());
             _session.SetString("shoppingCart", stringObject);
+        }
+
+        public CartProductViewModel AdditionChecks(CartProductViewModel product)
+        {
+            IEnumerable<AdminProductViewModel> products = new StockFunctions(_constring).RunGetStock();
+            foreach (var p in products)
+            {
+                foreach (var s in p.Stock)
+                {
+                    if (s.Id == product.StockId && product.Quantity > s.Quantity)
+                    {
+                        product.Quantity = s.Quantity;
+                    }
+                }
+            }
+            if (product.Quantity < 1)
+            {
+                product.Quantity = 1;
+            }
+            return product;
         }
     }
 }
