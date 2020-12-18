@@ -8,16 +8,19 @@ using Webshop.Data.Managers;
 using Webshop.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Webshop.Logic.Products;
 
 namespace Webshop.Logic
 {
     public class ShoppingCart
     {
+        private string _constring;
         private ISession _session;
         private IShoppingCart IShoppingCart;
 
         public ShoppingCart(ISession session, string conString)
         {
+            _constring = conString;
             _session = session;
             IShoppingCart = Factory.Factory.CreateIShoppingCart(conString);
         }
@@ -74,6 +77,12 @@ namespace Webshop.Logic
 
             
             return cartProductViewModels;
+        }
+
+        public void ClearShoppingCart()
+        {
+            string stringObject = JsonConvert.SerializeObject(new List<CartProductViewModel>());
+            _session.SetString("shoppingCart", stringObject);
         }
     }
 }

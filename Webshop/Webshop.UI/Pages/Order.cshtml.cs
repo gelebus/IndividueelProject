@@ -43,6 +43,7 @@ namespace Webshop.UI.Pages
                 City = Order.City,
                 Postcode = Order.Postcode
             });
+            new ShoppingCart(HttpContext.Session, Connectionstring).ClearShoppingCart();
             return RedirectToPage("OrderPlaced");
         }
     }

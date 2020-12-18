@@ -36,37 +36,9 @@ namespace Webshop.UI.Pages.Admin
             }
             foreach(var order in orders)
             {
-                string[] Items = order.OrderReference.Split(' ');
-                order.products = getCartProducts(Items);
+                order.products = new OrderFunctions(conString).GetCartProductsFromOrderRef(order.OrderReference);
             }
-
             Orders = orders;
-        }
-
-        private List<CartProductViewModel> getCartProducts(string[]Items)
-        {
-            List<CartProductViewModel> cart = new List<CartProductViewModel>();
-            foreach(var item in Items)
-            {
-                if (item != "")
-                {
-                    string[] values = item.Split('+');
-                    int[] numbers = Array.ConvertAll(values, int.Parse);
-                    cart.Add(new CartProductViewModel()
-                    {
-                        StockId = numbers[0],
-                        Quantity = numbers[1]
-                    });
-                }
-            }
-            foreach(var product in cart)
-            {
-                var p = new ProductFunctions(conString).RunGetProductByStockId(product.StockId);
-                product.Name = p.Name;
-                product.Value = $"€{p.Value.ToString("N2")}";
-            }
-
-            return cart;
         }
     }
 }
