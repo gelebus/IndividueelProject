@@ -28,7 +28,11 @@ namespace Webshop.Logic.Order
                 OrderReference = order.OrderReference,
                 Postcode = order.Postcode
             });
-            subtractStock(order.OrderReference);
+            if(orderDTO.Adress != "test@gmail.com" && orderDTO.City != "testCity")
+            {
+                subtractStock(order.OrderReference);
+            }
+            
             return new OrderViewModel()
             {
                 Id = orderDTO.Id,
@@ -57,6 +61,11 @@ namespace Webshop.Logic.Order
             }
 
             return orders;
+        }
+        public bool RemoveOrder(int id)
+        {
+            iorderFunctions.RemoveOrder(id);
+            return true;
         }
         public List<CartProductViewModel> GetCartProductsFromOrderRef(string OrderReference)
         {

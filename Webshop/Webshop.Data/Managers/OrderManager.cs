@@ -79,6 +79,20 @@ namespace Webshop.Data.Managers
             }
             return orders;
         }
+        void IOrderFunctions.RemoveOrder(int id)
+        {
+            string command = "DELETE FROM [Orders] WHERE Id = @Id";
+            using (SqlConnection sqlconnection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
+                {
+                    sqlconnection.Open();
+                    cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = id;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
 
     }

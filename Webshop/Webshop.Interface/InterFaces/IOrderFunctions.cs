@@ -8,5 +8,6 @@ namespace Webshop.Interface
     {
         OrderDTO CreateOrder(OrderDTO order);
         IEnumerable<OrderDTO> GetOrders();
+        void RemoveOrder(int id);
     }
 }
