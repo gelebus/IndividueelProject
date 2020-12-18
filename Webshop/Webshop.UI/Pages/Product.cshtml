@@ -7,18 +7,32 @@
     <p>@Model.Product.Name</p>
     <p>@Model.Product.Description</p>
     <p>@Model.Product.Value</p>
-    <div>
-        <form method="post">
-            <label>stock</label>
-            <select asp-for="CartProduct.StockId">
-                @foreach (var s in Model.Product.Stock)
-                {
-                    <option value="@s.Id">@s.Description</option>
-                }
-            </select>
-            <label style="font-weight:bold">Quantity:</label>
-            <input asp-for="CartProduct.Quantity" />
-            <button type="submit">submit</button>
-        </form>
-    </div>
+    @if (Model.StockCounter > 0)
+    {
+        <div>
+            <form method="post">
+                <label>stock</label>
+                <select asp-for="CartProduct.StockId">
+                    @foreach (var s in Model.Product.Stock)
+                    {
+                        @if(s.Quantity > 0)
+                        {
+                            <option value="@s.Id">@s.Description</option>
+                        } 
+                    }
+                </select>
+                <label style="font-weight:bold">Quantity:</label>
+                <input asp-for="CartProduct.Quantity" />
+                <button type="submit">submit</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p>
+                There is no stock available.
+            </p>
+        </div>
+    }
 </div>

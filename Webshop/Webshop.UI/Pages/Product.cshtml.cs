@@ -25,10 +25,12 @@ namespace Webshop.UI.Pages
         [BindProperty]
         public CartProductViewModel CartProduct { get; set; }
         
+        public int StockCounter { get; set; }
 
         public ProductViewModel Product { get; set; }
         public IActionResult OnGet(string name)
         {
+            StockCounter = 0;
             Product = new ProductFunctions(ConString).RunGetUserProduct(name.Replace("-", " "));
             if(Product == null)
             {
@@ -36,6 +38,13 @@ namespace Webshop.UI.Pages
             }
             else
             {
+                foreach(var s in Product.Stock)
+                {
+                    if(s.Quantity > 0)
+                    {
+                        StockCounter++;
+                    }      
+                }
                 return Page();
             }
         }

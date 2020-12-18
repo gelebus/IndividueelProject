@@ -3,16 +3,47 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
-<div>
-    @{
-        foreach (var Product in Model.Products)
+<div style="overflow: scroll; height: 600px; overflow-x:hidden; border:2px solid black">
+    <div class="row" style="width:100%; margin-left:0px">
+        @foreach (var Product in Model.Products)
         {
-            <a asp-page="Product" asp-route-name="@Product.Name.Replace(" ", "-")">
-                @Product.Name || @Product.Description || @Product.Value
-            </a>
-            <br>
+            <table style="width:50%; border:2px solid black;">
+                <tr style="border-bottom:2px solid black">
+                    <td class="text-center">
+                            <img src="~/Images/image-missing.png" style="max-height:100%; max-width:100%;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Product.Name
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Product.Description
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Product.Value
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a asp-page="Product" asp-route-name="@Product.Name.Replace(" ", "-")">
+                            Add To Cart
+                        </a>
+                    </td>
+                </tr>
+            </table>
         }
-    }
+
+    </div>
 </div>
 
