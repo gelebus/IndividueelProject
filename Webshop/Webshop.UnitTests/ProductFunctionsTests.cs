@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using Webshop.Interface;
 using Webshop.Logic.Products;
 using Webshop.Logic.ViewModels;
-using Webshop.Interface;
 
 namespace Webshop.UnitTests
 {
@@ -56,13 +54,15 @@ namespace Webshop.UnitTests
             string productName = "testproduct";
             string productDesc = "testdesc";
             decimal productValue = 2;
+            List<StockDTO> Stock = new List<StockDTO>();
+            Stock.Add(new StockDTO());
             var productDTO = new ProductDTO()
             {
                 Id = productId,
                 Name = productName,
                 Description = productDesc,
                 Value = productValue,
-                Stock = new List<StockDTO>()
+                Stock = Stock
             };
             userProductFunctions.Setup(x => x.GetProduct(productName)).Returns(productDTO);
 
@@ -74,7 +74,80 @@ namespace Webshop.UnitTests
             Assert.AreEqual(productName, product.Name);
             Assert.AreEqual($"€{productValue.ToString("N2")}", product.Value);
         }
+        [TestMethod]
+        public void GetProductWithStockId()
+        {
+            //arrange
+            int productId = 10;
+            int stockId = 1;
+            string productName = "testproduct";
+            string productDesc = "testdesc";
+            decimal productValue = 2;
+            List<StockDTO> Stock = new List<StockDTO>();
+            Stock.Add(new StockDTO() 
+            {
+                Id = stockId
+            });
 
+            var productDTO = new ProductDTO()
+            {
+                Id = productId,
+                Name = productName,
+                Description = productDesc,
+                Value = productValue,
+                Stock = Stock
+            };
+            adminProductFunctions.Setup(x => x.GetProductByStockId(stockId)).Returns(productDTO);
+
+            //act
+            AdminProductViewModel product = productFunctions.RunGetProductByStockId(stockId);
+
+            //assert
+            Assert.AreEqual(productId, product.Id);
+            Assert.AreEqual(productDesc, product.Description);
+            Assert.AreEqual(productName, product.Name);
+            Assert.AreEqual(productValue, product.Value);
+
+        }
+
+        [TestMethod]
+        public void GetUserProducts()
+        {
+            //arrange
+            List<ProductDTO> productDTOs = new List<ProductDTO>();
+            List<ProductDTO> checkList = new List<ProductDTO>();
+            productDTOs.Add(new ProductDTO()
+            {
+                Id = 1,
+                Name = "testProduct1",
+                Description = "testdesc"
+            });
+            productDTOs.Add(new ProductDTO()
+            {
+                Id = 2,
+                Name = "testProduct2",
+                Description = "testdesc2",
+            });
+            userProductFunctions.Setup(x => x.GetProducts()).Returns(productDTOs);
+
+            //act
+            IEnumerable<ProductViewModel>result = productFunctions.RunGetUserProducts();
+            foreach(var p in result)
+            {
+                checkList.Add(new ProductDTO()
+                {
+                    Description = p.Description,
+                    Name = p.Name
+                });
+            }
+
+            //assert
+            Assert.AreEqual(productDTOs[0].Description, checkList[0].Description);
+            Assert.AreEqual(productDTOs[0].Name, checkList[0].Name);
+
+            Assert.AreEqual(productDTOs[1].Description, checkList[1].Description);
+            Assert.AreEqual(productDTOs[1].Name, checkList[1].Name);
+        }
         [TestMethod]
         public void GetProducts()
         {
@@ -98,8 +171,8 @@ namespace Webshop.UnitTests
             adminProductFunctions.Setup(x => x.GetProducts()).Returns(productDTOs);
 
             //act
-            IEnumerable<AdminProductViewModel>result = productFunctions.RunGetProducts();
-            foreach(var p in result)
+            IEnumerable<AdminProductViewModel> result = productFunctions.RunGetProducts();
+            foreach (var p in result)
             {
                 checkList.Add(new ProductDTO()
                 {
@@ -130,7 +203,7 @@ namespace Webshop.UnitTests
             string productName = "testproduct";
             string productDesc = "testdesc";
             decimal productValue = 2;
-            var productDTO = new ProductDTO()
+            ProductDTO productDTO = new ProductDTO()
             {
                 Id = productId,
                 Name = productName,
@@ -138,10 +211,67 @@ namespace Webshop.UnitTests
                 Value = productValue
             };
 
+            ProductViewModel productvm = new ProductViewModel()
+            {
+                Name = productName,
+                Description = productDesc,
+                Value = productValue.ToString()
+            };
 
+            adminProductFunctions.Setup(x => x.CreateProduct(It.IsAny<ProductDTO>())).Returns(productDTO);
+            
             //act
+            var product = productFunctions.RunCreateProduct(productvm);
 
             //assert
+            Assert.AreEqual(productId, product.Id);
+            Assert.AreEqual(productDesc, product.Description);
+            Assert.AreEqual(productValue, product.Value);
+            Assert.AreEqual(productName, product.Name);
+        }
+
+        [TestMethod]
+        public void RemoveProduct()
+        {
+            //arrange
+            int productId = 10;
+
+            adminProductFunctions.Setup(x => x.RemoveProduct(It.IsAny<int>()));
+
+            // act
+            productFunctions.RunRemoveProduct(productId);
+
+            // assert
+            adminProductFunctions.Verify(x => x.RemoveProduct(productId));
+        }
+        [TestMethod]
+        public void UpdateProduct()
+        {
+            //arange
+            int productId = 10;
+            string productName = "testproduct";
+            string productDesc = "testdesc";
+            decimal productValue = 2;
+            AdminProductViewModel productvm = new AdminProductViewModel()
+            {
+                Id = productId,
+                Name = productName,
+                Description = productDesc,
+                Value = productValue
+            };
+            product.Setup(x => x.UpdateProduct(It.IsAny<ProductDTO>())).Returns(new ProductDTO()
+            {
+                Id = productvm.Id,
+                Name = productvm.Name,
+                Value = productvm.Value,
+                Description = productvm.Description
+            });
+
+            //act
+            productFunctions.RunUpdateProduct(productvm);
+
+            //assert
+            product.Verify(x => x.UpdateProduct(It.IsAny<ProductDTO>()));
         }
     }
 }

@@ -21,35 +21,30 @@ namespace Webshop.Data.Managers
         ProductDTO IAdminProductFunctions.CreateProduct(ProductDTO product)
         {
             ProductDTO Product = new ProductDTO();
-            string command1 = "INSERT INTO Products (Value,Name,Description) VALUES(@ProductValue,@ProductName,@ProductDesc)";
-            string command2 = "SELECT * FROM [Products] WHERE Id IN(SELECT Max(Id) FROM [Products])";
+            string command = "INSERT INTO Products (Value,Name,Description) OUTPUT INSERTED.Id VALUES(@ProductValue,@ProductName,@ProductDesc)";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
             {
                 sqlconnection.Open();
-                using (SqlCommand cmd = new SqlCommand(command1, sqlconnection))
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
                 {
                     cmd.Parameters.Add("@ProductValue", System.Data.SqlDbType.Decimal).Value = product.Value;
                     cmd.Parameters.Add("@ProductName", System.Data.SqlDbType.NVarChar).Value = product.Name;
                     cmd.Parameters.Add("@ProductDesc", System.Data.SqlDbType.NVarChar).Value = product.Description;
-                    
-                    cmd.ExecuteNonQuery();
-                }
-                using(SqlCommand cmd = new SqlCommand(command2,sqlconnection))
-                {
+
                     var reader = cmd.ExecuteReader();
 
-                    while (reader.Read())
+                    if (reader.Read())
                     {
                         Product = new ProductDTO()
                         {
-                            Id = reader.GetInt32(0),
-                            Value = reader.GetDecimal(1),
-                            Name = reader.GetString(2),
-                            Description = reader.GetString(3)
+                            Id = reader.GetInt32(0)                           
                         };
                     }
                 }
             }
+            Product.Name = product.Name;
+            Product.Description = product.Description;
+            Product.Value = product.Value;
             return Product;
         }
         ProductDTO IProduct.UpdateProduct(ProductDTO request)
