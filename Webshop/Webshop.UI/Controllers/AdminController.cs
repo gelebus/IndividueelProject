@@ -25,31 +25,31 @@ namespace Webshop.UI.Controllers
         [HttpPost("products")]
         public IActionResult CreateProduct([FromBody] ProductViewModel productViewModel)
         {
-            return Ok(new ProductFunctions(ConString).RunCreateProduct(productViewModel));
+            return Ok(new ProductFunctions(ConString,null,null,null).RunCreateProduct(productViewModel));
         }
 
         [HttpGet("products/{id}")]
         public IActionResult GetProduct(int id)
         {
-            return Ok(new ProductFunctions(ConString).RunGetProduct(id));
+            return Ok(new ProductFunctions(ConString, null, null, null).RunGetProduct(id));
         }
 
         [HttpGet("products")]
         public IActionResult GetProducts()
         {
-            return Ok(new ProductFunctions(ConString).RunGetProducts());
+            return Ok(new ProductFunctions(ConString, null, null, null).RunGetProducts());
         }
 
         [HttpDelete("products/{id}")]
         public IActionResult RemoveProduct(int id)
         {
-            return Ok(new ProductFunctions(ConString).RunRemoveProduct(id));
+            return Ok(new ProductFunctions(ConString, null, null, null).RunRemoveProduct(id));
         }
 
         [HttpPut("products")]
         public IActionResult UpdateProduct([FromBody] AdminProductViewModel productViewModel)
         {
-            return Ok(new ProductFunctions(ConString).RunUpdateProduct(productViewModel));
+            return Ok(new ProductFunctions(ConString, null, null, null).RunUpdateProduct(productViewModel));
         }
 
 

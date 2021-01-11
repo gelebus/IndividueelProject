@@ -86,7 +86,7 @@ namespace Webshop.Logic.Order
             }
             foreach (var product in cart)
             {
-                var p = new ProductFunctions(ConnectionString).RunGetProductByStockId(product.StockId);
+                var p = new ProductFunctions(ConnectionString,null,null, null).RunGetProductByStockId(product.StockId);
                 product.Name = p.Name;
                 product.Value = $"€{p.Value.ToString("N2")}";
             }

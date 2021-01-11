@@ -24,7 +24,7 @@ namespace Webshop.UI.Pages
        
         public void OnGet()
         {
-            Products = new ProductFunctions(ConString).RunGetUserProducts();
+            Products = new ProductFunctions(ConString, null, null, null).RunGetUserProducts();
         }
     }
 }

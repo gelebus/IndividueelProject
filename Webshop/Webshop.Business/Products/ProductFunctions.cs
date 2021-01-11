@@ -16,12 +16,23 @@ namespace Webshop.Logic.Products
         private readonly string ConString;
         private IAdminProductFunctions iAdminProductFunctions;
         private IUserProductFunctions iUserProductFunctions;
+        private IProduct iProduct;
 
-        public ProductFunctions(string conString)
+        public ProductFunctions(string conString, IAdminProductFunctions testAdminProductFunctions, IUserProductFunctions testUserProductFunctions, IProduct testIProduct)
         {
             ConString = conString;
-            iAdminProductFunctions = Factory.Factory.CreateIAdminProductFunctions(ConString);
-            iUserProductFunctions = Factory.Factory.CreateIUserProductFunctions(ConString);
+            if(testAdminProductFunctions != null || testUserProductFunctions != null || testIProduct != null)
+            {
+                iAdminProductFunctions = testAdminProductFunctions;
+                iUserProductFunctions = testUserProductFunctions;
+                iProduct = testIProduct;
+            }
+            else
+            {
+                iAdminProductFunctions = Factory.Factory.CreateIAdminProductFunctions(ConString);
+                iUserProductFunctions = Factory.Factory.CreateIUserProductFunctions(ConString);
+                iProduct = Factory.Factory.CreateIProduct(conString);
+            }
         }
 
         public AdminProductViewModel RunCreateProduct(ProductViewModel productViewModel)
@@ -141,7 +152,7 @@ namespace Webshop.Logic.Products
         }
         public AdminProductViewModel RunUpdateProduct(AdminProductViewModel productViewModel)
         {
-            ProductDTO response = new Product(productViewModel, ConString).RunUpdate();
+            ProductDTO response = new Product(productViewModel, iProduct).RunUpdate();
             AdminProductViewModel responseVm = new AdminProductViewModel()
             {
                 Id = response.Id,

@@ -31,7 +31,7 @@ namespace Webshop.UI.Pages
         public IActionResult OnGet(string name)
         {
             StockCounter = 0;
-            Product = new ProductFunctions(ConString).RunGetUserProduct(name.Replace("-", " "));
+            Product = new ProductFunctions(ConString, null, null, null).RunGetUserProduct(name.Replace("-", " "));
             if(Product == null)
             {
                 return RedirectToPage("Index");
