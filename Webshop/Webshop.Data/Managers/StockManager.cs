@@ -20,31 +20,26 @@ namespace Webshop.Data.Managers
         StockDTO IStockFunctions.CreateStock(StockDTO stock)
         {
             StockDTO newStock = stock;
-            string command1 = "INSERT INTO Stock (Quantity,Description,ProductId) VALUES(@SQuantity,@SDesc,@SProductId)";
-            string command2 = "SELECT * FROM [Stock] WHERE Id IN(SELECT Max(Id) FROM [Stock])";
+            string command = "INSERT INTO Stock (Quantity,Description,ProductId) OUTPUT INSERTED.Id VALUES(@SQuantity,@SDesc,@SProductId)";
             using (SqlConnection sqlconnection = new SqlConnection(connectionstring))
             {
                 sqlconnection.Open();
-                using (SqlCommand cmd = new SqlCommand(command1, sqlconnection))
+                using (SqlCommand cmd = new SqlCommand(command, sqlconnection))
                 {
                     cmd.Parameters.Add("@SQuantity", System.Data.SqlDbType.Int).Value = newStock.Quantity;
                     cmd.Parameters.Add("@SDesc", System.Data.SqlDbType.NVarChar).Value = newStock.Description;
                     cmd.Parameters.Add("@SProductId", System.Data.SqlDbType.Int).Value = newStock.ProductId;
 
-                    cmd.ExecuteNonQuery();
-                }
-                using (SqlCommand cmd = new SqlCommand(command2, sqlconnection))
-                {
                     var reader = cmd.ExecuteReader();
 
-                    while (reader.Read())
+                    if (reader.Read())
                     {
                         newStock = new StockDTO()
                         {
                             Id = reader.GetInt32(0),
-                            Quantity = reader.GetInt32(1),
-                            Description = reader.GetString(2),
-                            ProductId = reader.GetInt32(3)
+                            Quantity = stock.Quantity,
+                            Description = stock.Description,
+                            ProductId = stock.ProductId
                         };
                     }
                 }

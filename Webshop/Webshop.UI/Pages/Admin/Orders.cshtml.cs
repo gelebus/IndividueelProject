@@ -28,7 +28,7 @@ namespace Webshop.UI.Pages.Admin
         {
             List<OrderViewModel> orders = new List<OrderViewModel>();
 
-            var orderdtos = new OrderFunctions(conString).GetOrders();
+            var orderdtos = new OrderFunctions(conString,null,null,null,null).GetOrders();
 
             foreach(var order in orderdtos)
             {
@@ -36,7 +36,7 @@ namespace Webshop.UI.Pages.Admin
             }
             foreach(var order in orders)
             {
-                order.products = new OrderFunctions(conString).GetCartProductsFromOrderRef(order.OrderReference);
+                order.products = new OrderFunctions(conString,null,null,null,null).GetCartProductsFromOrderRef(order.OrderReference);
             }
             Orders = orders;
         }

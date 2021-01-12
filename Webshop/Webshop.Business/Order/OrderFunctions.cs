@@ -11,28 +11,42 @@ namespace Webshop.Logic.Order
 {
     public class OrderFunctions
     {
-        IOrderFunctions iorderFunctions;
+        IOrderFunctions IOrderFunctions;
+        IAdminProductFunctions ProductFunctions;
+        IStockFunctions StockFunctions;
+        IStock Stock;
+
         private readonly string ConnectionString;
-        public OrderFunctions(string Constring)
+        public OrderFunctions(string Constring, IOrderFunctions testOrderFunctions, IAdminProductFunctions testProductFunctions, IStockFunctions testStockFunctions, IStock testStock)
         {
-            ConnectionString = Constring;
-            iorderFunctions = Factory.Factory.CreateIOrderFunctions(Constring);
+            if(testOrderFunctions != null || testProductFunctions != null)
+            {
+                IOrderFunctions = testOrderFunctions;
+                ProductFunctions = testProductFunctions;
+                StockFunctions = testStockFunctions;
+                Stock = testStock;
+            }
+            else
+            {
+                ConnectionString = Constring;
+                IOrderFunctions = Factory.Factory.CreateIOrderFunctions(Constring);
+                ProductFunctions = null;
+                StockFunctions = null;
+                Stock = null;
+            }
+            
         }
 
         public OrderViewModel CreateOrder(OrderViewModel order)
         {
-            OrderDTO orderDTO = iorderFunctions.CreateOrder(new OrderDTO()
+            OrderDTO orderDTO = IOrderFunctions.CreateOrder(new OrderDTO()
             {
                 Adress = order.Adress,
                 City = order.City,
                 OrderReference = order.OrderReference,
                 Postcode = order.Postcode
             });
-            if(orderDTO.Adress != "test@gmail.com" && orderDTO.City != "testCity")
-            {
-                subtractStock(order.OrderReference);
-            }
-            
+            subtractStock(order.OrderReference);
             return new OrderViewModel()
             {
                 Id = orderDTO.Id,
@@ -46,7 +60,7 @@ namespace Webshop.Logic.Order
         {
             List<OrderViewModel> orders = new List<OrderViewModel>();
 
-            var ordersDTOs = iorderFunctions.GetOrders();
+            var ordersDTOs = IOrderFunctions.GetOrders();
 
             foreach(var o in ordersDTOs)
             {
@@ -64,7 +78,7 @@ namespace Webshop.Logic.Order
         }
         public bool RemoveOrder(int id)
         {
-            iorderFunctions.RemoveOrder(id);
+            IOrderFunctions.RemoveOrder(id);
             return true;
         }
         public List<CartProductViewModel> GetCartProductsFromOrderRef(string OrderReference)
@@ -86,7 +100,7 @@ namespace Webshop.Logic.Order
             }
             foreach (var product in cart)
             {
-                var p = new ProductFunctions(ConnectionString,null,null, null).RunGetProductByStockId(product.StockId);
+                var p = new ProductFunctions(ConnectionString,ProductFunctions,null, null).RunGetProductByStockId(product.StockId);
                 product.Name = p.Name;
                 product.Value = $"€{p.Value.ToString("N2")}";
             }
@@ -96,7 +110,7 @@ namespace Webshop.Logic.Order
         private void subtractStock(string orderRef)
         {
             List<CartProductViewModel> cartProducts = GetCartProductsFromOrderRef(orderRef);
-            IEnumerable<AdminProductViewModel> stock = new StockFunctions(ConnectionString).RunGetStock();
+            IEnumerable<AdminProductViewModel> stock = new StockFunctions(ConnectionString, null, StockFunctions).RunGetStock();
             
             foreach(var product in cartProducts)
             {
@@ -115,7 +129,7 @@ namespace Webshop.Logic.Order
                     Description = stockvm.Description,
                     ProductId = stockvm.ProductId
                 }
-                , ConnectionString).RunUpdate();
+                , Stock).RunUpdate();
             }
         }
     }

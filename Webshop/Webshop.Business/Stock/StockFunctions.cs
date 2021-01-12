@@ -14,10 +14,21 @@ namespace Webshop.Logic.Stock
     {
         private readonly string ConString;
         IStockFunctions IAdminStockFunctions;
-        public StockFunctions(string conString)
+        IStock iStock;
+        public StockFunctions(string conString, IStock stock, IStockFunctions stockFunctions)
         {
-            ConString = conString;
-            IAdminStockFunctions = Factory.Factory.CreateIStockFunctions(ConString);
+            if (stock != null || stockFunctions != null)
+            {
+                iStock = stock;
+                IAdminStockFunctions = stockFunctions;
+            }
+            else
+            {
+                ConString = conString;
+                IAdminStockFunctions = Factory.Factory.CreateIStockFunctions(ConString);
+                iStock = Factory.Factory.CreateIStock(conString);
+            }
+                
         }
 
         public StockViewModel RunCreateStock(StockViewModel request)
@@ -48,7 +59,7 @@ namespace Webshop.Logic.Stock
             List<StockDTO> stock = new List<StockDTO>();
             foreach (StockViewModel stockViewModel in stockVms)
             {
-                new Stock(stockViewModel, ConString).RunUpdate();
+                new Stock(stockViewModel, iStock).RunUpdate();
                 stock.Add(new StockDTO()
                 {
                     Id = stockViewModel.Id,

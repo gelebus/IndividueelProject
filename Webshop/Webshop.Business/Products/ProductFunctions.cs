@@ -18,14 +18,14 @@ namespace Webshop.Logic.Products
         private IUserProductFunctions iUserProductFunctions;
         private IProduct iProduct;
 
-        public ProductFunctions(string conString, IAdminProductFunctions testAdminProductFunctions, IUserProductFunctions testUserProductFunctions, IProduct testIProduct)
+        public ProductFunctions(string conString, IAdminProductFunctions AdminProductFunctions, IUserProductFunctions UserProductFunctions, IProduct IProduct)
         {
             ConString = conString;
-            if(testAdminProductFunctions != null || testUserProductFunctions != null || testIProduct != null)
+            if(AdminProductFunctions != null || UserProductFunctions != null || IProduct != null)
             {
-                iAdminProductFunctions = testAdminProductFunctions;
-                iUserProductFunctions = testUserProductFunctions;
-                iProduct = testIProduct;
+                iAdminProductFunctions = AdminProductFunctions;
+                iUserProductFunctions = UserProductFunctions;
+                iProduct = IProduct;
             }
             else
             {

@@ -6,7 +6,7 @@ using Webshop.Factory;
 using Webshop.Interface;
 using Webshop.Logic.ViewModels;
 
-namespace Webshop.Logic
+namespace Webshop.Logic.Products
 {
     public class Product
     {

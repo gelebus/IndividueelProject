@@ -86,7 +86,7 @@ namespace Webshop.Logic
 
         private CartProductViewModel AdditionChecks(CartProductViewModel product)
         {
-            IEnumerable<AdminProductViewModel> products = new StockFunctions(_constring).RunGetStock();
+            IEnumerable<AdminProductViewModel> products = new StockFunctions(_constring, null,null).RunGetStock();
             foreach (var p in products)
             {
                 foreach (var s in p.Stock)

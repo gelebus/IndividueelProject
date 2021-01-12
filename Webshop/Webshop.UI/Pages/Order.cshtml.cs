@@ -36,7 +36,7 @@ namespace Webshop.UI.Pages
             {
                 orderRef += $"{s.StockId}+{s.Quantity} ";
             }
-            new OrderFunctions(Connectionstring).CreateOrder(new OrderViewModel()
+            new OrderFunctions(Connectionstring, null,null,null,null).CreateOrder(new OrderViewModel()
             {
                 OrderReference = orderRef,
                 Adress = Order.Adress,

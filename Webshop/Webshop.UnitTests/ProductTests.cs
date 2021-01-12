@@ -8,14 +8,14 @@ using Webshop.Logic.ViewModels;
 namespace Webshop.UnitTests
 {
     [TestClass]
-    public class ProductFunctionsTests
+    public class ProductTests
     {
         private readonly ProductFunctions productFunctions;
         private readonly Mock<IAdminProductFunctions> adminProductFunctions = new Mock<IAdminProductFunctions>();
         private readonly Mock<IUserProductFunctions> userProductFunctions = new Mock<IUserProductFunctions>();
         private readonly Mock<IProduct> product = new Mock<IProduct>();
 
-        public ProductFunctionsTests()
+        public ProductTests()
         {
             productFunctions = new ProductFunctions(null, adminProductFunctions.Object, userProductFunctions.Object, product.Object);
         }
@@ -55,7 +55,7 @@ namespace Webshop.UnitTests
             string productDesc = "testdesc";
             decimal productValue = 2;
             List<StockDTO> Stock = new List<StockDTO>();
-            Stock.Add(new StockDTO());
+            Stock.Add(new StockDTO() { InStock = true });
             var productDTO = new ProductDTO()
             {
                 Id = productId,
@@ -74,6 +74,20 @@ namespace Webshop.UnitTests
             Assert.AreEqual(productName, product.Name);
             Assert.AreEqual($"€{productValue.ToString("N2")}", product.Value);
         }
+        [TestMethod]
+        public void GetProductWithNameReturnsNullIfProductIsNull()
+        {
+            //arrange
+            userProductFunctions.Setup(x => x.GetProduct(It.IsAny<string>())).Returns((ProductDTO)null);
+
+            //act
+            var product = productFunctions.RunGetUserProduct("Unknown");
+
+            //assert
+            Assert.IsNull(product);
+        }
+        
+
         [TestMethod]
         public void GetProductWithStockId()
         {
@@ -245,7 +259,7 @@ namespace Webshop.UnitTests
             adminProductFunctions.Verify(x => x.RemoveProduct(productId));
         }
         [TestMethod]
-        public void UpdateProduct()
+        public void UpdateProductWithoutStock()
         {
             //arange
             int productId = 10;
@@ -258,6 +272,50 @@ namespace Webshop.UnitTests
                 Name = productName,
                 Description = productDesc,
                 Value = productValue
+            };
+            product.Setup(x => x.UpdateProduct(It.IsAny<ProductDTO>())).Returns(new ProductDTO()
+            {
+                Id = productvm.Id,
+                Name = productvm.Name,
+                Value = productvm.Value,
+                Description = productvm.Description
+            });
+
+            //act
+            productFunctions.RunUpdateProduct(productvm);
+
+            //assert
+            product.Verify(x => x.UpdateProduct(It.IsAny<ProductDTO>()));
+        }
+        [TestMethod]
+        public void UpdateProductWithStock()
+        {
+            //arange
+            List<StockViewModel> stockList = new List<StockViewModel>();
+
+            int productId = 10;
+            string productName = "testproduct";
+            string productDesc = "testdesc";
+            decimal productValue = 2;
+
+            int stockId = 3;
+            int stockQuantity = 4;
+            string stockDesc = "testStockDesc";
+
+            stockList.Add(new StockViewModel()
+            {
+                Id = stockId,
+                Description = stockDesc,
+                Quantity = stockQuantity,
+                ProductId = productId
+            });
+            AdminProductViewModel productvm = new AdminProductViewModel()
+            {
+                Id = productId,
+                Name = productName,
+                Description = productDesc,
+                Value = productValue,
+                Stock = stockList
             };
             product.Setup(x => x.UpdateProduct(It.IsAny<ProductDTO>())).Returns(new ProductDTO()
             {
