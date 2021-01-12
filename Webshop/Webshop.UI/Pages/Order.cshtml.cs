@@ -30,7 +30,7 @@ namespace Webshop.UI.Pages
             {
                 return Page();
             }
-            IEnumerable<CartProductViewModel> cart = new ShoppingCart(HttpContext.Session, Connectionstring).GetShoppingCart();
+            IEnumerable<CartProductViewModel> cart = new ShoppingCart(HttpContext.Session, Connectionstring, null, null).GetShoppingCart();
             string orderRef = "";
             foreach(var s in cart)
             {
@@ -43,7 +43,7 @@ namespace Webshop.UI.Pages
                 City = Order.City,
                 Postcode = Order.Postcode
             });
-            new ShoppingCart(HttpContext.Session, Connectionstring).ClearShoppingCart();
+            new ShoppingCart(HttpContext.Session, Connectionstring, null, null).ClearShoppingCart();
             return RedirectToPage("OrderPlaced");
         }
     }

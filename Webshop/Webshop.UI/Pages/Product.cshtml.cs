@@ -51,7 +51,7 @@ namespace Webshop.UI.Pages
 
         public IActionResult OnPost()
         {
-            new ShoppingCart(HttpContext.Session, ConString).AddToShoppingCart(CartProduct);
+            new ShoppingCart(HttpContext.Session, ConString, null, null).AddToShoppingCart(CartProduct);
             
 
             return RedirectToPage("ShoppingCart");

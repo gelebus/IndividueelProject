@@ -30,9 +30,9 @@ namespace Webshop.Logic.Order
             {
                 ConnectionString = Constring;
                 IOrderFunctions = Factory.Factory.CreateIOrderFunctions(Constring);
+                Stock = Factory.Factory.CreateIStock(Constring);
                 ProductFunctions = null;
                 StockFunctions = null;
-                Stock = null;
             }
             
         }

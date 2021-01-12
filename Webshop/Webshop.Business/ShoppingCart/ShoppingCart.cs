@@ -19,12 +19,23 @@ namespace Webshop.Logic
         private string _constring;
         private ISession _session;
         private IShoppingCart IShoppingCart;
+        private IStockFunctions stockFunctions;
 
-        public ShoppingCart(ISession session, string conString)
+        public ShoppingCart(ISession session, string conString, IShoppingCart testShoppingCart, IStockFunctions testStockFunctions)
         {
+            if(testShoppingCart != null || testStockFunctions != null)
+            {
+                IShoppingCart = testShoppingCart;
+                stockFunctions = testStockFunctions;
+            }
+            else
+            {
+                IShoppingCart = Factory.Factory.CreateIShoppingCart(conString);
+                stockFunctions = null;
+            }
             _constring = conString;
             _session = session;
-            IShoppingCart = Factory.Factory.CreateIShoppingCart(conString);
+            
         }
 
         public void AddToShoppingCart(CartProductViewModel product)
@@ -86,7 +97,7 @@ namespace Webshop.Logic
 
         private CartProductViewModel AdditionChecks(CartProductViewModel product)
         {
-            IEnumerable<AdminProductViewModel> products = new StockFunctions(_constring, null,null).RunGetStock();
+            IEnumerable<AdminProductViewModel> products = new StockFunctions(_constring, null,stockFunctions).RunGetStock();
             foreach (var p in products)
             {
                 foreach (var s in p.Stock)

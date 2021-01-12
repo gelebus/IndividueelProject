@@ -22,7 +22,7 @@ namespace Webshop.UI.Pages
         public IActionResult OnGet()
         {
             List<CartProductViewModel>cart = new List<CartProductViewModel>();
-            IEnumerable<CartProductViewModel> cartlist = new ShoppingCart(HttpContext.Session,conString).GetShoppingCart();
+            IEnumerable<CartProductViewModel> cartlist = new ShoppingCart(HttpContext.Session,conString, null, null).GetShoppingCart();
             foreach(var cartproduct in cartlist)
             {
                 cart.Add(cartproduct);
