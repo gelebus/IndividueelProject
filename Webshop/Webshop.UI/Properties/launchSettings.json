@@ -18,7 +18,8 @@
     "Webshop.UI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "https://i407367core.venus.fhict.nl;http://i407367core.venus.fhict.nl",
+      //"https://localhost:5001;http://localhost:5000": null,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
